@@ -1,18 +1,7 @@
-import express from 'express';
+import app from './app';
 import dotEnv from 'dotenv';
 import mongoose from 'mongoose';
-import cors from 'cors';
-
-const app = express();
 dotEnv.config();
-
-//middlewares
-app.use(express.json());
-app.use(cors());
-
-app.get('/', (req, res) => {
-	res.send('Hello World!');
-});
 
 // Database connection
 const connect = async () => {
