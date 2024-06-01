@@ -1,17 +1,18 @@
-import { ITour } from "./tour.interface";
-import tourModel from "./tour.model";
+import { catchAsyncError } from '../../middlewares/catchAsyncErrors';
+import { ITour } from './tour.interface';
+import tourModel from './tour.model';
 
+const createTour = async (data: ITour): Promise<ITour | null> => {
+	const { fromLocation, toLocation, tourDate } = data;
 
-const createTour= async(data:ITour)=>{
+	const tour = await tourModel.create({
+		fromLocation,
+		toLocation,
+		tourDate,
+	});
+	return tour;
+};
 
-    const tour = new tourModel({data});
-    await tour.save();
-
-    return tour;
-    
-
-}
-
-export const tourService={
-    createTour,
-}
+export const tourService = {
+	createTour,
+};
