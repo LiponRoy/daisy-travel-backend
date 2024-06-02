@@ -1,29 +1,33 @@
-import { NextFunction, Request, Response } from 'express';
-import { tourService } from './tour.service';
-import { catchAsyncError } from '../../middlewares/catchAsyncErrors';
-import ErrorHandler from '../../utils/ErrorHandler';
+import { NextFunction, Request, Response } from "express";
+import { tourService } from "./tour.service";
+import ErrorHandler from "../../utils/ErrorHandler";
+import sendResponse from "../../shared/sendResponse";
+import httpStatus from "http-status";
+import { catchAsyncError } from "../../shared/catchAsyncErrors";
 
 const createTour = catchAsyncError(
-	async (req: Request, res: Response, next: NextFunction) => {
-		const tour = await tourService.createTour(req.body);
+  async (req: Request, res: Response, next: NextFunction) => {
+    const { ...tourData } = req.body;
+    const result = await tourService.createTour(tourData);
 
-		if (!tour) {
-			return next(new ErrorHandler('Failed to create user !', 400));
-		}
+    if (!result) {
+      return next(new ErrorHandler("Failed to create user !", 400));
+    }
 
-		res.status(200).send({
-			success: 'true',
-			message: 'toure created successfully !',
-			data: tour,
-		});
-	}
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "Tour Created Successfully With sendRequest !",
+      data: result,
+    });
+  }
 );
 
 const testOnly = (req: Request, res: Response) => {
-	res.send('Test Only is running !');
+  res.send("Test Only is running !");
 };
 
 export const tourController = {
-	createTour,
-	testOnly,
+  createTour,
+  testOnly,
 };

@@ -1,6 +1,6 @@
 import express, { Application } from 'express';
 import cors from 'cors';
-import { toureRoute } from './modules/tour/tour.route';
+import { tourRoute } from './modules/tour/tour.route';
 import errorMiddleware from './middlewares/errors';
 
 const app: Application = express();
@@ -10,7 +10,7 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 
 // routes all
-app.use('/api/v1/tour', toureRoute);
+app.use('/api/v1/tour', tourRoute);
 
 app.get('/', (req, res) => {
 	res.send('Hello World!');

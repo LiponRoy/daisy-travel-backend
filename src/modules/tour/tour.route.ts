@@ -6,4 +6,4 @@ const routes = express.Router();
 routes.post('/create', tourController.createTour);
 routes.get('/get', tourController.testOnly);
 
-export const toureRoute = routes;
+export const tourRoute = routes;
