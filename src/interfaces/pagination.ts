@@ -1,7 +1,6 @@
-export interface IPagination{
-    page: number
-    limit: number,
-    shortBy: string,
-    shortOrder: string,
-
+export interface IPagination {
+	page?: number;
+	limit?: number;
+	shortBy?: string;
+	shortOrder?: string;
 }
