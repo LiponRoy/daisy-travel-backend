@@ -1,3 +1,4 @@
+import { SortOrder } from 'mongoose';
 import { paginetionHelpers } from '../../helpers/paginationHelpers';
 import { IPaginationResponse } from '../../interfaces/common';
 import { IPagination } from '../../interfaces/pagination';
@@ -14,9 +15,20 @@ const getAllTour = async (
 ): Promise<IPaginationResponse<ITour[]>> => {
 	// const { page = 1, limit = 4 } = payLoad;
 	// const skip = (page - 1) * limit;
-	const { page, limit, skip } = paginetionHelpers.calculatePaginetion(payLoad);
+	const { page, limit, skip, sortBy, sortOrder } =
+		paginetionHelpers.calculatePaginetion(payLoad);
 
-	const tours = await tourModel.find().sort().skip(skip).limit(limit);
+	// for sorting
+	const sortConditions: { [key: string]: SortOrder } = {};
+
+	if (sortBy && sortOrder) {
+		sortConditions[sortBy] = sortOrder;
+	}
+	const tours = await tourModel
+		.find()
+		.sort(sortConditions)
+		.skip(skip)
+		.limit(limit);
 	const total = await tourModel.countDocuments();
 	return {
 		meta: {
