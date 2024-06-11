@@ -7,3 +7,7 @@ export interface ITour {
 	price: number;
 	tourDate: string;
 }
+
+export interface ItureFilters {
+	searchTerm?: string;
+}
