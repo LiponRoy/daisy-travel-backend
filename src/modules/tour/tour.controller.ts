@@ -12,7 +12,9 @@ import { ITour } from './tour.interface';
 const createTour = catchAsyncError(
 	async (req: Request, res: Response, next: NextFunction) => {
 		const { ...tourData } = req.body;
+
 		const result = await tourService.createTour(tourData);
+		// console.log("result :",result)
 
 		if (!result) {
 			return next(new ErrorHandler('Failed to create user !', 400));
