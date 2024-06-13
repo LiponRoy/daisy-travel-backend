@@ -4,7 +4,7 @@ import { Document } from 'mongoose';
 export interface ITour {
 	fromLocation: string;
 	toLocation: string;
-	price: number;
+	price: string;
 	tourDate: string;
 }
 

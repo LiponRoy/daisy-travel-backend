@@ -4,6 +4,7 @@ import { IPaginationResponse } from "../../interfaces/common";
 import { IPagination } from "../../interfaces/pagination";
 import { ITour, ItureFilters } from "./tour.interface";
 import tourModel from "./tour.model";
+import { tourSearchableField } from "../../constants/paginationsFields";
 
 const createTour = async (payload: ITour): Promise<ITour | null> => {
   const tour = await tourModel.create(payload);
@@ -38,16 +39,15 @@ const getAllTour = async (
   // 	},
   // ];
 
-  const tourSearchableField = ["fromLocation", "toLocation", "price"];
   const andCondisons = [];
-
+  
   // for searching
   if (searchTerm) {
     andCondisons.push({
       $or: tourSearchableField.map((field) => ({
         [field]: {
           $regex: searchTerm,
-          option: "i",
+          $options: "i",
         },
       })),
     });
@@ -75,8 +75,11 @@ const getAllTour = async (
     sortConditions[sortBy] = sortOrder;
   }
   // End sorting
+
+  const whereConditions = andCondisons.length > 0 ? { $and: andCondisons } : {};
+
   const tours = await tourModel
-    .find({ $and: andCondisons })
+    .find(whereConditions)
     .sort(sortConditions)
     .skip(skip)
     .limit(limit);
