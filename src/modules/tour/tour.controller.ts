@@ -53,7 +53,25 @@ const getTours = catchAsyncError(async (req: Request, res: Response) => {
 	// console.log('query: ', paginationOptions);
 });
 
+const getSingleTour=catchAsyncError(async (req: Request, res: Response) => {
+	const id = req.params.id;
+
+	const result = await tourService.getSingleTour(id);
+
+	sendResponse<ITour>(res, {
+		statusCode: httpStatus.OK,
+		success: true,
+		message: 'Single Tour get Successfully !',
+
+		data: result
+	});
+
+
+
+})
+
 export const tourController = {
 	createTour,
 	getTours,
+	getSingleTour
 };

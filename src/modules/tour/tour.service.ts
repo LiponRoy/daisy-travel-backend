@@ -40,7 +40,7 @@ const getAllTour = async (
   // ];
 
   const andCondisons = [];
-  
+
   // for searching
   if (searchTerm) {
     andCondisons.push({
@@ -94,7 +94,14 @@ const getAllTour = async (
   };
 };
 
+const getSingleTour = async (id: string): Promise<ITour | null> => {
+  const tours = await tourModel.findById(id);
+
+  return tours;
+};
+
 export const tourService = {
   createTour,
   getAllTour,
+  getSingleTour,
 };
