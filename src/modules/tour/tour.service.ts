@@ -100,8 +100,21 @@ const getSingleTour = async (id: string): Promise<ITour | null> => {
   return tours;
 };
 
+const updateTour = async (id: string,payLoad:Partial<ITour>): Promise<ITour | null> => {
+  const tours = await tourModel.findByIdAndUpdate({_id:id},payLoad,{new:true});
+
+  return tours;
+};
+const deleteTour = async (id: string): Promise<ITour | null> => {
+  const tours = await tourModel.findByIdAndDelete({_id:id});
+
+  return tours;
+};
+
 export const tourService = {
   createTour,
   getAllTour,
   getSingleTour,
+  updateTour,
+  deleteTour
 };
