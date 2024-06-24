@@ -2,6 +2,7 @@ import dotEnv from 'dotenv';
 import mongoose from 'mongoose';
 import config from './config';
 import app from './app';
+import { errorLogger, logger } from './shared/logger';
 
 dotEnv.config();
 
@@ -20,13 +21,14 @@ const connect = async () => {
 	try {
 		mongoose.set('strictQuery', false);
 		await mongoose.connect(config.mongodb_url as string);
-		console.log('Connected to mongoDB.');
+		logger.info('Connected to mongoDB.');
 	} catch (error) {
+		errorLogger.error(error);
 		throw error;
 	}
 };
 mongoose.connection.on('disconnected', () => {
-	console.log('mongoDB disconnected!');
+	errorLogger.error('mongoDB disconnected!');
 });
 
 // Server Creation
@@ -34,7 +36,7 @@ const port = config.port || 5000;
 const server = app.listen(port, () => {
 	connect();
 	const myApp = `App is running on port : ${port} in ${config.node_env} mode`;
-	console.log(myApp);
+	logger.info(myApp);
 });
 
 // Handle Unhandled Promise rejections
