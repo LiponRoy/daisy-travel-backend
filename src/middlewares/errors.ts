@@ -1,5 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import ErrorHandler from '../utils/ErrorHandler';
+import {ZodError } from 'zod';
+import handleZodError from '../utils/handleZodError';
 
 const errorMiddleware = (
 	err: any,
@@ -55,6 +57,11 @@ const errorMiddleware = (
 		if (err.name === 'TokenExpiredError') {
 			const message = 'JSON Web Token is expired. Try Again!!!';
 			error = new ErrorHandler(message, 400);
+		}
+		// Zod error
+		if (err instanceof ZodError) {
+			const allZod = handleZodError(err);
+			error = new ErrorHandler(allZod.message, 400);
 		}
 
 		res.status(error.statusCode || 500).json({
