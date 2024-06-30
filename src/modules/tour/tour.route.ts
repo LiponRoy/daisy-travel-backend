@@ -5,7 +5,8 @@ import { TourZod } from './tour.validation';
 
 const routes = express.Router();
 
-routes.post('/create',validateRequest(TourZod.TourZodSchema),tourController.createTour);
+//routes.post('/create',validateRequest(TourZod.TourZodSchema),tourController.createTour);
+routes.post('/create', tourController.createTour);
 routes.get('/', tourController.getTours);
 routes.get('/:id', tourController.getSingleTour);
 routes.patch('/:id', tourController.updateTour);

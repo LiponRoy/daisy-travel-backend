@@ -1,120 +1,125 @@
-import { SortOrder } from "mongoose";
-import { paginetionHelpers } from "../../helpers/paginationHelpers";
-import { IPaginationResponse } from "../../interfaces/common";
-import { IPagination } from "../../interfaces/pagination";
-import { ITour, ItureFilters } from "./tour.interface";
-import tourModel from "./tour.model";
-import { tourSearchableField } from "../../constants/paginationsFields";
+import { SortOrder } from 'mongoose';
+import { paginetionHelpers } from '../../helpers/paginationHelpers';
+import { IPaginationResponse } from '../../interfaces/common';
+import { IPagination } from '../../interfaces/pagination';
+import { ITour, ItureFilters } from './tour.interface';
+import tourModel from './tour.model';
+import { tourSearchableField } from '../../constants/paginationsFields';
 
 const createTour = async (payload: ITour): Promise<ITour | null> => {
-  const tour = await tourModel.create(payload);
-  return tour;
+	const tour = await tourModel.create(payload);
+	return tour;
 };
 
 const getAllTour = async (
-  filters: ItureFilters,
-  payLoad: IPagination
+	filters: ItureFilters,
+	payLoad: IPagination
 ): Promise<IPaginationResponse<ITour[]>> => {
-  // for searching
-  const { searchTerm, ...filtersData } = filters;
+	// for searching
+	const { searchTerm, ...filtersData } = filters;
 
-  console.log("filtersData :", filtersData);
+	console.log('filtersData :', filtersData);
 
-  // const andCondisons = [
-  // 	{
-  // 		$or: [
-  // 			{
-  // 				fromLocation: {
-  // 					$regex: searchTerm,
-  // 					$options: 'i',
-  // 				},
-  // 			},
-  // 			{
-  // 				toLocation: {
-  // 					$regex: searchTerm,
-  // 					$options: 'i',
-  // 				},
-  // 			},
-  // 		],
-  // 	},
-  // ];
+	// const andCondisons = [
+	// 	{
+	// 		$or: [
+	// 			{
+	// 				fromLocation: {
+	// 					$regex: searchTerm,
+	// 					$options: 'i',
+	// 				},
+	// 			},
+	// 			{
+	// 				toLocation: {
+	// 					$regex: searchTerm,
+	// 					$options: 'i',
+	// 				},
+	// 			},
+	// 		],
+	// 	},
+	// ];
 
-  const andCondisons = [];
+	const andCondisons = [];
 
-  // for searching
-  if (searchTerm) {
-    andCondisons.push({
-      $or: tourSearchableField.map((field) => ({
-        [field]: {
-          $regex: searchTerm,
-          $options: "i",
-        },
-      })),
-    });
-  }
+	// for searching
+	if (searchTerm) {
+		andCondisons.push({
+			$or: tourSearchableField.map((field) => ({
+				[field]: {
+					$regex: searchTerm,
+					$options: 'i',
+				},
+			})),
+		});
+	}
 
-  // for filtering
-  if (Object.keys(filtersData).length) {
-    andCondisons.push({
-      $and: Object.entries(filtersData).map(([field, value]) => ({
-        [field]: value,
-      })),
-    });
-  }
+	// for filtering
+	if (Object.keys(filtersData).length) {
+		andCondisons.push({
+			$and: Object.entries(filtersData).map(([field, value]) => ({
+				[field]: value,
+			})),
+		});
+	}
 
-  // const { page = 1, limit = 4 } = payLoad;
-  // const skip = (page - 1) * limit;
-  const { page, limit, skip, sortBy, sortOrder } =
-    paginetionHelpers.calculatePaginetion(payLoad);
+	// const { page = 1, limit = 4 } = payLoad;
+	// const skip = (page - 1) * limit;
+	const { page, limit, skip, sortBy, sortOrder } =
+		paginetionHelpers.calculatePaginetion(payLoad);
 
-  // for sorting
-  // const sortConditions: { [key: string]: SortOrder } = {};
-  const sortConditions: Record<string, SortOrder> = {};
+	// for sorting
+	// const sortConditions: { [key: string]: SortOrder } = {};
+	const sortConditions: Record<string, SortOrder> = {};
 
-  if (sortBy && sortOrder) {
-    sortConditions[sortBy] = sortOrder;
-  }
-  // End sorting
+	if (sortBy && sortOrder) {
+		sortConditions[sortBy] = sortOrder;
+	}
+	// End sorting
 
-  const whereConditions = andCondisons.length > 0 ? { $and: andCondisons } : {};
+	const whereConditions = andCondisons.length > 0 ? { $and: andCondisons } : {};
 
-  const tours = await tourModel
-    .find(whereConditions)
-    .sort(sortConditions)
-    .skip(skip)
-    .limit(limit);
-  const total = await tourModel.countDocuments();
-  return {
-    meta: {
-      page,
-      limit,
-      total,
-    },
-    data: tours,
-  };
+	const tours = await tourModel
+		.find(whereConditions)
+		.sort(sortConditions)
+		.skip(skip)
+		.limit(limit);
+	const total = await tourModel.countDocuments();
+	return {
+		meta: {
+			page,
+			limit,
+			total,
+		},
+		data: tours,
+	};
 };
 
 const getSingleTour = async (id: string): Promise<ITour | null> => {
-  const tours = await tourModel.findById(id);
+	const tours = await tourModel.findById(id);
 
-  return tours;
+	return tours;
 };
 
-const updateTour = async (id: string,payLoad:Partial<ITour>): Promise<ITour | null> => {
-  const tours = await tourModel.findByIdAndUpdate({_id:id},payLoad,{new:true});
+const updateTour = async (
+	id: string,
+	payLoad: Partial<ITour>
+): Promise<ITour | null> => {
+	const tours = await tourModel.findByIdAndUpdate({ _id: id }, payLoad, {
+		new: true,
+	});
 
-  return tours;
+	return tours;
 };
 const deleteTour = async (id: string): Promise<ITour | null> => {
-  const tours = await tourModel.findByIdAndDelete({_id:id});
+	const tours = await tourModel.findByIdAndDelete({ _id: id });
 
-  return tours;
+	return tours;
 };
 
 export const tourService = {
-  createTour,
-  getAllTour,
-  getSingleTour,
-  updateTour,
-  deleteTour
+	createTour,
+	getAllTour,
+	getSingleTour,
+	updateTour,
+	deleteTour,
 };
