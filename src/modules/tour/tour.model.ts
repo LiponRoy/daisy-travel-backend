@@ -1,9 +1,12 @@
 // src/models/Tour.ts
 
 import mongoose, { Schema, Model, model } from 'mongoose';
-import { ITour } from './tour.interface';
+import { ITour, TourModelType } from './tour.interface';
 
 // 2. Create a Schema corresponding to the document interface.
+
+
+
 const TourSchema: Schema = new Schema<ITour>(
 	{
 		fromLocation: { type: String, required: true },
@@ -16,7 +19,4 @@ const TourSchema: Schema = new Schema<ITour>(
 	}
 );
 
-// 3. Create a Model.
-const tourModel: Model<ITour> = model<ITour>('Tour', TourSchema);
-
-export default tourModel;
+export const tourModel = model<ITour,TourModelType>('Tour', TourSchema);

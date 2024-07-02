@@ -1,49 +1,51 @@
-import dotEnv from 'dotenv';
-import mongoose from 'mongoose';
-import config from './config';
-import app from './app';
-import { errorLogger, logger } from './shared/logger';
+import mongoose from "mongoose";
+import config from "./config";
+import app from "./app";
+import { errorLogger, logger } from "./shared/logger";
+import { Server } from "http";
 
-dotEnv.config();
-
-// for test only is it running on development or production mode
-console.log('Running on -- ', app.get('env'));
-
-// Handle Uncaught exceptions
-process.on('uncaughtException', (err) => {
-	console.log(`ERROR: ${err.stack}`);
-	console.log('Shutting down due to uncaught exception');
+  // if uncaught Exception happened
+process.on('uncaughtException',(error)=>{
+	errorLogger.error(error)
 	process.exit(1);
-});
+})
 
-// Database connection
-const connect = async () => {
-	try {
-		mongoose.set('strictQuery', false);
-		await mongoose.connect(config.mongodb_url as string);
-		logger.info('Connected to mongoDB.');
-	} catch (error) {
-		errorLogger.error(error);
-		throw error;
-	}
+let server: Server;
+
+const bootstrap = async () => {
+  
+  try {
+  // Mongodb connection
+    await mongoose.connect(config.mongodb_url as string);
+    logger.info(`MongoDB Connected -YES ${config.port}`);
+  // Server creation
+    server = app.listen(config.port, () => {
+      logger.info(`App listening on port -YES  ${config.port}`);
+    });
+  } catch (error) {
+    errorLogger.error(`Failed to connect database ${error}`);
+  }
+
+  // if unhandledRejection happened
+  process.on('unhandledRejection', (error) => {
+    if (server) {
+      server.close(() => {
+        errorLogger.error(error);
+        process.exit(1);
+      });
+    } else {
+      process.exit(1);
+    }
+  });
+  //...........
 };
-mongoose.connection.on('disconnected', () => {
-	errorLogger.error('mongoDB disconnected!');
-});
+bootstrap();
 
-// Server Creation
-const port = config.port || 5000;
-const server = app.listen(port, () => {
-	connect();
-	const myApp = `App is running on port : ${port} in ${config.node_env} mode`;
-	logger.info(myApp);
-});
+process.on('SIGTERM', () => {
+	logger.info('sigterm is received');
+	if(server){
+		server.close();
+	}
+	
+})
 
-// Handle Unhandled Promise rejections
-process.on('unhandledRejection', (err: any) => {
-	console.log(`ERROR: ${err.stack}`);
-	console.log('Shutting down the server due to Unhandled Promise rejection');
-	server.close(() => {
-		process.exit(1);
-	});
-});

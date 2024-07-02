@@ -1,20 +1,22 @@
 import { ZodError, ZodIssue } from "zod";
+import { IGenericErrorMessage } from "../interfaces/error";
+import { IGenericErrorResponse } from "../interfaces/common";
 
-const handleZodError = (err: ZodError): any => {
-  const errorZod: any = err.issues.map((issue: ZodIssue) => {
+const handleZodError = (err: ZodError): IGenericErrorResponse => {
+  const errorZod:IGenericErrorMessage[] = err.issues.map((issue: ZodIssue) => {
     return {
-      path: issue?.path[issue.path.length - 1],
+      // pick second element of path array, that is why= issue?.path[1],
+      path: issue?.path[1],
       message: issue?.message,
     };
   });
-  //const result = Object.values(errorZod)
-  const pth=errorZod.map((v: any) => v.path)
-  const message=errorZod.map((v: any) => v.message)
+  const pth=errorZod.map((v: any) => v.path);
+  const message=errorZod.map((v: any) => v.message).toString();
 
-  //console.log("errorZod--2 ", result.toString()
   return {
-    statusCode: message,
-    message: message,
+    statusCode: 400,
+    message: "Zod Error- "+message,
+    errorMessage:pth
   };
 };
 

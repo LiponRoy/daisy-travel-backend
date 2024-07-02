@@ -3,8 +3,8 @@ import { paginetionHelpers } from '../../helpers/paginationHelpers';
 import { IPaginationResponse } from '../../interfaces/common';
 import { IPagination } from '../../interfaces/pagination';
 import { ITour, ItureFilters } from './tour.interface';
-import tourModel from './tour.model';
 import { tourSearchableField } from '../../constants/paginationsFields';
+import { tourModel } from './tour.model';
 
 const createTour = async (payload: ITour): Promise<ITour | null> => {
 	const tour = await tourModel.create(payload);
