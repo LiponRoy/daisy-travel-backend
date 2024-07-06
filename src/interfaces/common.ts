@@ -1,9 +1,9 @@
-import { IGenericErrorMessage } from "./error";
+import { IGenericErrorMessage } from './error';
 
-export interface IGenericErrorResponse{
-	statusCode:number;
-	message:string;
-	errorMessage:IGenericErrorMessage[]
+export interface IGenericErrorResponse {
+	statusCode: number;
+	message: string;
+	errorMessage: IGenericErrorMessage[];
 }
 export interface IPaginationResponse<T> {
 	meta: {

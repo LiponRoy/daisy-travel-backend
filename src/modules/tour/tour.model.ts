@@ -5,13 +5,13 @@ import { ITour, TourModelType } from './tour.interface';
 
 // 2. Create a Schema corresponding to the document interface.
 
-
-
 const TourSchema: Schema = new Schema<ITour>(
 	{
 		fromLocation: { type: String, required: true },
 		toLocation: { type: String, required: true },
 		price: { type: String, required: true },
+		moment: { type: String, required: true },
+		code: { type: String, required: true },
 		tourDate: { type: String, required: true },
 	},
 	{
@@ -19,4 +19,17 @@ const TourSchema: Schema = new Schema<ITour>(
 	}
 );
 
-export const tourModel = model<ITour,TourModelType>('Tour', TourSchema);
+TourSchema.pre('save', async function (next) {
+	const isTourExists = await tourModel.findOne({
+		moment: this.moment,
+		code: this.code,
+		tourDate: this.tourDate,
+	});
+
+	if (isTourExists) {
+		throw new Error('Tour is already exists !');
+	}
+	next();
+});
+
+export const tourModel = model<ITour, TourModelType>('Tour', TourSchema);

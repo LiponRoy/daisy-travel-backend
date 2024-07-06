@@ -5,8 +5,14 @@ import { IPagination } from '../../interfaces/pagination';
 import { ITour, ItureFilters } from './tour.interface';
 import { tourSearchableField } from '../../constants/paginationsFields';
 import { tourModel } from './tour.model';
+import { tourMomentCodeMapper } from './tour.constant';
 
 const createTour = async (payload: ITour): Promise<ITour | null> => {
+	// Ensure that moments and tis perticular code are asme or not
+	if (tourMomentCodeMapper[payload.moment] !== payload.code) {
+		throw new Error('Invalid Moment and Code');
+	}
+
 	const tour = await tourModel.create(payload);
 	return tour;
 };
@@ -102,9 +108,19 @@ const getSingleTour = async (id: string): Promise<ITour | null> => {
 
 const updateTour = async (
 	id: string,
-	payLoad: Partial<ITour>
+	payload: Partial<ITour>
 ): Promise<ITour | null> => {
-	const tours = await tourModel.findByIdAndUpdate({ _id: id }, payLoad, {
+	// If Update moment and code both have to update
+	// Ensure that moments and tis perticular code are asme or not
+	if (
+		payload.moment &&
+		payload.code &&
+		tourMomentCodeMapper[payload.moment] !== payload.code
+	) {
+		throw new Error('Invalid Moment and Code');
+	}
+
+	const tours = await tourModel.findOneAndUpdate({ _id: id }, payload, {
 		new: true,
 	});
 

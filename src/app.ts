@@ -14,12 +14,6 @@ app.use(express.urlencoded({ extended: true }));
 // route
 app.use('/api/v1/', routes);
 
-// app.get('/',async(req:Request, res:Response,next:NextFunction) => {
-//     Promise.reject(new Error('Unhandle Promise Rejection'))
-// 	//res.send('Hello World!');
-// 	//console.log(Z)
-// });
-
 // error middleware ...
 app.use(globalErrorHandler);
 

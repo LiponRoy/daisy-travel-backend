@@ -1,12 +1,12 @@
 import { NextFunction, Request, Response } from 'express';
 import { tourService } from './tour.service';
-import sendResponse from '../../shared/sendResponse';
+import sendResponse from '../../utils/sendResponse';
 import httpStatus from 'http-status';
-import { catchAsyncError } from '../../shared/catchAsyncErrors';
 import pick from '../../shared/pick';
 import { paginationsFields } from '../../constants/paginationsFields';
 import { ITour } from './tour.interface';
-import ApiError from '../../utils/ApiError';
+import ApiError from '../../errors/ApiError';
+import { catchAsyncError } from '../../utils/catchAsyncErrors';
 
 const createTour = catchAsyncError(
 	async (req: Request, res: Response, next: NextFunction) => {
@@ -70,6 +70,7 @@ const getSingleTour = catchAsyncError(async (req: Request, res: Response) => {
 		data: result,
 	});
 });
+
 const updateTour = catchAsyncError(async (req: Request, res: Response) => {
 	const id = req.params.id;
 	const payLoad = req.body;
