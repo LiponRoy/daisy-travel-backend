@@ -86,6 +86,7 @@ const getAllTour = async (
 
 	const tours = await tourModel
 		.find(whereConditions)
+		.populate('country', 'name -_id')
 		.sort(sortConditions)
 		.skip(skip)
 		.limit(limit);
@@ -101,7 +102,7 @@ const getAllTour = async (
 };
 
 const getSingleTour = async (id: string): Promise<ITour | null> => {
-	const tours = await tourModel.findById(id);
+	const tours = await tourModel.findById(id).populate('country');
 
 	return tours;
 };

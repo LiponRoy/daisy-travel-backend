@@ -7,4 +7,5 @@ export default {
 	port: process.env.PORT,
 	mongodb_url: process.env.MONGODB,
 	node_env: process.env.NODE_ENV,
+	default_user_pass: process.env.DEFAULT_USER_PASS,
 };

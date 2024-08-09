@@ -1,48 +1,70 @@
+import { createLogger, format, transports } from 'winston';
+const { combine, timestamp, label, printf, prettyPrint } = format;
+import path from 'path';
+import DailyRotateFile from 'winston-daily-rotate-file';
 
-import path from "path";
-import { createLogger, format, transports  } from 'winston';
-const { combine, timestamp, label, printf,prettyPrint } = format;
+// const myFormat = printf(({ level, message, label, timestamp }) => {
+// 	return ` [${label}] ${level}: ${message}${timestamp}`;
+// });
 
 const myFormat = printf(({ level, message, label, timestamp }) => {
-    const date = new Date(timestamp);
-    const hour = date.getHours();
-    const minutes = date.getMinutes();
-    const second = date.getSeconds();
-  return `${date.toDateString()}:${hour}-${minutes}-${second} [${label}] ${level}: ${message}`;
+	const date = new Date(timestamp);
+	const hour = date.getHours();
+	const minutes = date.getMinutes();
+	const second = date.getSeconds();
+	return `${date.toDateString()}:${hour}-${minutes}-${second} [${label}] ${level}: ${message}`;
 });
 
 const logger = createLogger({
-  level: "info",
-  format: combine(
-    label({ label: 'LR' }),
-    timestamp(),
-    myFormat,prettyPrint()
-  ),
-  transports: [
-    new transports.File({
-      filename: path.join(process.cwd(), "logs", "winston", "success.log"),
-      level: "info",
-    }),
-    new transports.Console(),
-  ],
+	level: 'info',
+	format: combine(
+		label({ label: 'Lipon' }),
+		timestamp(),
+		myFormat,
+		prettyPrint()
+	),
+	transports: [
+		new transports.Console(),
+		new DailyRotateFile({
+			filename: path.join(
+				process.cwd(),
+				'log',
+				'winston',
+				'success',
+				'success-%DATE%.log'
+			),
+			datePattern: 'YYYY-MM-DD-HH',
+			zippedArchive: true,
+			maxSize: '20m',
+			maxFiles: '14d',
+		}),
+	],
 });
 
-// create new folder and file for logging
-// logs/winstone
-// success.log
-// error.log
-
 const errorLogger = createLogger({
-  level: "error",
-  format: combine(
-    label({ label: 'LR' }),
-    timestamp(),
-    myFormat
-  ),
-  transports: [
-    new transports.File({ filename: path.join(process.cwd(), "logs", "winston", "error.log"), level: "error" }),
-    new transports.Console(),
-  ],
+	level: 'error',
+	format: combine(
+		label({ label: 'Lipon' }),
+		timestamp(),
+		myFormat,
+		prettyPrint()
+	),
+	transports: [
+		new transports.Console(),
+		new DailyRotateFile({
+			filename: path.join(
+				process.cwd(),
+				'log',
+				'winston',
+				'errors',
+				'error-%DATE%.log'
+			),
+			datePattern: 'YYYY-MM-DD-HH',
+			zippedArchive: true,
+			maxSize: '20m',
+			maxFiles: '14d',
+		}),
+	],
 });
 
 export { logger, errorLogger };

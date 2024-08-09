@@ -1,4 +1,4 @@
-import { Document, Model } from 'mongoose';
+import { Document, Model, Types } from 'mongoose';
 
 export type TourMoment = 'Morning' | 'Evening' | 'Night';
 export type TourCode = '01' | '02' | '03';
@@ -10,6 +10,7 @@ export interface ITour {
 	moment: TourMoment;
 	code: TourCode;
 	tourDate: string;
+	country: Types.ObjectId;
 }
 
 export type TourModelType = Model<ITour, Record<string, unknown>>;

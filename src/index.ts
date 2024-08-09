@@ -1,51 +1,41 @@
-import mongoose from "mongoose";
-import config from "./config";
-import app from "./app";
-import { errorLogger, logger } from "./shared/logger";
-import { Server } from "http";
+import mongoose from 'mongoose';
+import config from './config';
+import app from './app';
+import { Server } from 'http';
+import { errorLogger, logger } from './shared/logger';
 
-  // if uncaught Exception happened
-process.on('uncaughtException',(error)=>{
-	errorLogger.error(error)
+// uncaught Exception handle
+process.on('uncaughtException', () => {
+	console.log(`😈 uncaughtException is detected , shutting down ...`);
 	process.exit(1);
-})
+});
 
 let server: Server;
-
-const bootstrap = async () => {
-  
-  try {
-  // Mongodb connection
-    await mongoose.connect(config.mongodb_url as string);
-    logger.info(`MongoDB Connected -YES ${config.port}`);
-  // Server creation
-    server = app.listen(config.port, () => {
-      logger.info(`App listening on port -YES  ${config.port}`);
-    });
-  } catch (error) {
-    errorLogger.error(`Failed to connect database ${error}`);
-  }
-
-  // if unhandledRejection happened
-  process.on('unhandledRejection', (error) => {
-    if (server) {
-      server.close(() => {
-        errorLogger.error(error);
-        process.exit(1);
-      });
-    } else {
-      process.exit(1);
-    }
-  });
-  //...........
-};
-bootstrap();
-
-process.on('SIGTERM', () => {
-	logger.info('sigterm is received');
-	if(server){
-		server.close();
+//console.log(ab);
+const main = async () => {
+	try {
+		// Mongodb connection
+		await mongoose.connect(config.mongodb_url as string);
+		logger.info(`MongoDB Connected -YES ${config.port}`);
+		// Server creation
+		server = app.listen(config.port, () => {
+			logger.info(`App listening on port -YES  ${config.port}`);
+		});
+	} catch (error) {
+		errorLogger.error(`Failed to connect database ${error}`);
 	}
-	
-})
+	//...........
+};
+main();
 
+// Handle Unhandled Promise rejections
+process.on('unhandledRejection', (err) => {
+	console.log(`😈 unahandledRejection is detected , shutting down ...`, err);
+	if (server) {
+		server.close(() => {
+			errorLogger.error(err);
+			process.exit(1);
+		});
+	}
+	process.exit(1);
+});

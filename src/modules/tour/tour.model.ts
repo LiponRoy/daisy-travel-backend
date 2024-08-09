@@ -13,6 +13,7 @@ const TourSchema: Schema = new Schema<ITour>(
 		moment: { type: String, required: true },
 		code: { type: String, required: true },
 		tourDate: { type: String, required: true },
+		country: [{ type: Schema.Types.ObjectId, ref: 'Country', required: true }],
 	},
 	{
 		timestamps: true, // Adds createdAt and updatedAt fields

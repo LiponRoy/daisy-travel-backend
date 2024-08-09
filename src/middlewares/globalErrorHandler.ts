@@ -23,12 +23,13 @@ const globalErrorHandler: ErrorRequestHandler = (error, req, res, next) => {
 		statusCode = zodErr.statusCode;
 		message = zodErr.message;
 		errorMessage = zodErr.errorMessage;
-		// For castom ApiError error
+		// Wrong Mongoose Object ID Error
 	} else if (error.name === 'CastError') {
 		const simplifiedError = handleCastError(error);
 		statusCode = simplifiedError.statusCode;
 		message = simplifiedError.message;
 		errorMessage = simplifiedError.errorMessage;
+		// Handling Mongoose duplicate key errors
 	} else if (error.code === 11000) {
 		const simplifiedError = handleDuplicateError(error);
 		statusCode = simplifiedError.statusCode;
@@ -42,6 +43,30 @@ const globalErrorHandler: ErrorRequestHandler = (error, req, res, next) => {
 					{
 						path: '',
 						message: error.message,
+					},
+			  ]
+			: [];
+		// Handling wrong JWT error
+	} else if (error.name === 'JsonWebTokenError') {
+		statusCode = 400;
+		message = 'JSON Web Token is invalid. Try Again!!!';
+		errorMessage = message
+			? [
+					{
+						path: '',
+						message: 'JSON Web Token is invalid. Try Again!!!',
+					},
+			  ]
+			: [];
+		// for normal Error class
+	} else if (error.name === 'TokenExpiredError') {
+		statusCode = 400;
+		message = 'JSON Web Token is expired. Try Again!!!';
+		errorMessage = message
+			? [
+					{
+						path: '',
+						message: 'JSON Web Token is expired. Try Again!!!',
 					},
 			  ]
 			: [];

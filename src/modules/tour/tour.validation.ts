@@ -19,6 +19,9 @@ const TourZodSchema = z.object({
 		tourDate: z.string({
 			required_error: 'Tour Date is required',
 		}),
+		country: z.string({
+			required_error: 'country is required',
+		}),
 	}),
 });
 
