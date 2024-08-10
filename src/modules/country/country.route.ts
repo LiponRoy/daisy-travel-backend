@@ -11,4 +11,6 @@ routes.post(
 	countryController.createCountry
 );
 
+routes.get('/', countryController.getAllAcountry);
+
 export const countryRoutes = routes;

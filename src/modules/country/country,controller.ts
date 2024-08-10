@@ -27,16 +27,17 @@ const createCountry = catchAsyncError(
 
 const getAllAcountry = catchAsyncError(async (req: Request, res: Response) => {
 	const result = await countryService.allCountry();
-
+	//console.log('result----', result);
 	sendResponse(res, {
 		statusCode: httpStatus.OK,
 		success: true,
 		message: 'Country are retrieved successfully',
 		//meta: result.meta,
-		data: result.result,
+		data: result,
 	});
 });
 
 export const countryController = {
 	createCountry,
+	getAllAcountry,
 };

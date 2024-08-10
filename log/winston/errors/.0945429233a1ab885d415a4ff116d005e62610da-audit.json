@@ -49,6 +49,16 @@
             "date": 1723224270368,
             "name": "E:\\github all project\\daisy-travel-backend\\log\\winston\\errors\\error-2024-08-09-23.log",
             "hash": "aefaed1f310900436dd60e5ff4ede75febaee6b74e2f855d1f55b8c92987f09b"
+        },
+        {
+            "date": 1723314546949,
+            "name": "E:\\github all project\\daisy-travel-backend\\log\\winston\\errors\\error-2024-08-11-00.log",
+            "hash": "6d10656ed0a8a46da875369ab94ea9a315ba9a11f5a26731e5e7f62da87e8561"
+        },
+        {
+            "date": 1723316890749,
+            "name": "E:\\github all project\\daisy-travel-backend\\log\\winston\\errors\\error-2024-08-11-01.log",
+            "hash": "bcd52a7423e2a975a2d7df2bf6653eba001b57672470fdc1f73c176db5f99a3d"
         }
     ],
     "hashType": "sha256"
