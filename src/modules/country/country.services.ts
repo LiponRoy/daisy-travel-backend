@@ -8,12 +8,14 @@ const createCountry = async (payload: ICountry): Promise<ICountry | null> => {
 
 const allCountry = async (): Promise<any> => {
 	const tour = await countryModel
-		.find(
+		.findOne(
 			{
 				name: 'Singapur',
 			},
 			{
-				_id: 1,
+				name: 1,
+				location: 1,
+				_id: 0,
 			}
 		)
 		.sort({

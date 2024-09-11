@@ -12,7 +12,7 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 
 // route
-app.use('/api/v1/', routes);
+app.use('/api/v1', routes);
 
 // Testing
 app.get('/test', (req: Request, res: Response, next: NextFunction) => {
