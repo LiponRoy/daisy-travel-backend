@@ -139,10 +139,6 @@ const loginUser = async (payload: IUser) => {
 		throw new ApiError(httpStatus.NOT_FOUND, 'This user is not found !');
 	}
 
-	// if (user.isVerified===false) {
-	//   throw new ApiError(httpStatus.NOT_FOUND, "Your not verified");
-	// }
-
 	//checking if the password is correct
 	if (!(await User.isPasswordMatched(payload?.password, user?.password)))
 		throw new ApiError(httpStatus.FORBIDDEN, 'Password do not matched');
@@ -158,10 +154,45 @@ const loginUser = async (payload: IUser) => {
 		config.jwt_access_secret as string,
 		config.jwt_access_expires_in as string
 	);
+	const refressToken = createToken(
+		jwtPayload,
+		config.jwt_refresh_secret as string,
+		config.jwt_refresh_expires_in as string
+	);
 
 	return {
 		accessToken,
+		refressToken,
 		user,
+	};
+};
+
+const refreshToken = async (token: string) => {
+	// checking if the given token is valid
+	const decoded = verifyToken(token, config.jwt_refresh_secret as string);
+
+	const { email, role } = decoded;
+
+	// checking if the user is exist
+	const user = await User.isUserExistsByEmail(email);
+
+	if (!user) {
+		throw new ApiError(httpStatus.NOT_FOUND, 'This user is not found !');
+	}
+
+	const jwtPayload = {
+		email: user.email,
+		role: user.role,
+	};
+
+	const accessToken = createToken(
+		jwtPayload,
+		config.jwt_access_secret as string,
+		config.jwt_access_expires_in as string
+	);
+
+	return {
+		accessToken,
 	};
 };
 
@@ -242,6 +273,7 @@ export const AuthServices = {
 	verifyEmail,
 	resendVerifyEmailCode,
 	loginUser,
+	refreshToken,
 	forgotPassword,
 	resetPassword,
 	getUsers,

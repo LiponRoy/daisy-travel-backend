@@ -4,11 +4,17 @@ import routes from './routes';
 import httpStatus from 'http-status';
 import notFound from './middlewares/notFound';
 import globalErrorHandler from './middlewares/globalErrorHandler';
+import config from './config';
 
 const app: Application = express();
 //middlewares
 app.use(express.json());
-app.use(cors());
+app.use(
+	cors({
+		origin: config.frontend_URL,
+		credentials: true,
+	})
+);
 app.use(express.urlencoded({ extended: true }));
 
 // route

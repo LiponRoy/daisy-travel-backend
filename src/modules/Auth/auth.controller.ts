@@ -46,9 +46,9 @@ const resendVerifyEmailCode = catchAsyncError(
 
 const loginUser = catchAsyncError(async (req: Request, res: Response) => {
 	const result = await AuthServices.loginUser(req.body);
-	const { accessToken, user } = result;
+	const { accessToken, refressToken, user } = result;
 
-	res.cookie('accessToken', accessToken, {
+	res.cookie('refressToken', refressToken, {
 		secure: config.node_env === 'production',
 		httpOnly: true,
 		sameSite: 'strict',
@@ -63,6 +63,18 @@ const loginUser = catchAsyncError(async (req: Request, res: Response) => {
 			accessToken,
 			user,
 		},
+	});
+});
+
+const refreshToken = catchAsyncError(async (req: Request, res: Response) => {
+	const { refreshToken } = req.cookies;
+	const result = await AuthServices.refreshToken(refreshToken);
+
+	sendResponse(res, {
+		statusCode: httpStatus.OK,
+		success: true,
+		message: 'Access token is retrieved successfully!',
+		data: result,
 	});
 });
 
@@ -123,6 +135,7 @@ export const AuthControllers = {
 	verifyEmail,
 	resendVerifyEmailCode,
 	loginUser,
+	refreshToken,
 	forgotPassword,
 	resetPassword,
 	logout,
