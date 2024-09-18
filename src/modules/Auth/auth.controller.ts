@@ -108,16 +108,34 @@ const resetPassword = catchAsyncError(async (req: Request, res: Response) => {
 });
 
 const logout = catchAsyncError(async (req: Request, res: Response) => {
-	res.clearCookie('accessToken');
-	res.status(200).json({ success: true, message: 'Logged out successfully' });
+	//res.clearCookie('refressToken');
+	res.cookie('refressToken', null, {
+        expires: new Date(Date.now()),
+        httpOnly: true
+    })
 
 	sendResponse(res, {
 		statusCode: httpStatus.OK,
 		success: true,
-		message: 'User is logged out successfully!',
+		message: 'User Logged out',
 		data: [],
 	});
 });
+
+// // Logout user   =>   /api/v1/logout
+// exports.logout = catchAsyncErrors(async (req, res, next) => {
+//     res.cookie('token', null, {
+//         expires: new Date(Date.now()),
+//         httpOnly: true
+//     })
+
+//     res.status(200).json({
+//         success: true,
+//         message: 'Logged out'
+//     })
+// })
+
+
 
 const getUsers = catchAsyncError(async (req: Request, res: Response) => {
 	const users = await AuthServices.getUsers();
@@ -126,6 +144,18 @@ const getUsers = catchAsyncError(async (req: Request, res: Response) => {
 		statusCode: httpStatus.OK,
 		success: true,
 		message: 'Getting all Users ',
+		data: users,
+	});
+});
+
+const userProfile = catchAsyncError(async (req: Request, res: Response) => {
+	const{email}=req.body
+	const users = await AuthServices.userProfile(email);
+
+	sendResponse(res, {
+		statusCode: httpStatus.OK,
+		success: true,
+		message: 'Got profile user',
 		data: users,
 	});
 });
@@ -140,4 +170,5 @@ export const AuthControllers = {
 	resetPassword,
 	logout,
 	getUsers,
+	userProfile,
 };

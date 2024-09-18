@@ -18,6 +18,7 @@ router.post(
 );
 router.post('/logout', AuthControllers.logout);
 router.get('/users', AuthControllers.getUsers);
+router.post('/userProfile', AuthControllers.userProfile);
 router.post('/forgot-password', AuthControllers.forgotPassword);
 router.post('/reset-password/:token', AuthControllers.resetPassword);
 router.post('/verify-email', AuthControllers.verifyEmail);

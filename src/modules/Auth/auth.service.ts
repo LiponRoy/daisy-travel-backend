@@ -268,6 +268,17 @@ const getUsers = async () => {
 	return { users };
 };
 
+const userProfile = async (email:string) => {
+
+	const user = await User.findOne({email});
+
+	if (!user) {
+		throw new ApiError(409, 'Profile user not found');
+	}
+
+	return { user };
+};
+
 export const AuthServices = {
 	signupUser,
 	verifyEmail,
@@ -277,4 +288,5 @@ export const AuthServices = {
 	forgotPassword,
 	resetPassword,
 	getUsers,
+	userProfile,
 };
