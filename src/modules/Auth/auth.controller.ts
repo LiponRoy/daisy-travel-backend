@@ -46,9 +46,9 @@ const resendVerifyEmailCode = catchAsyncError(
 
 const loginUser = catchAsyncError(async (req: Request, res: Response) => {
 	const result = await AuthServices.loginUser(req.body);
-	const { accessToken, refressToken, user } = result;
+	const { authToken,user } = result;
 
-	res.cookie('refressToken', refressToken, {
+	res.cookie('authToken', authToken, {
 		secure: config.node_env === 'production',
 		httpOnly: true,
 		sameSite: 'strict',
@@ -59,24 +59,21 @@ const loginUser = catchAsyncError(async (req: Request, res: Response) => {
 		statusCode: httpStatus.OK,
 		success: true,
 		message: 'User is logged in successfully!',
-		data: {
-			accessToken,
-			user,
-		},
+		data: user
 	});
 });
 
-const refreshToken = catchAsyncError(async (req: Request, res: Response) => {
-	const { refreshToken } = req.cookies;
-	const result = await AuthServices.refreshToken(refreshToken);
+// const refreshToken = catchAsyncError(async (req: Request, res: Response) => {
+// 	const { refreshToken } = req.cookies;
+// 	const result = await AuthServices.refreshToken(refreshToken);
 
-	sendResponse(res, {
-		statusCode: httpStatus.OK,
-		success: true,
-		message: 'Access token is retrieved successfully!',
-		data: result,
-	});
-});
+// 	sendResponse(res, {
+// 		statusCode: httpStatus.OK,
+// 		success: true,
+// 		message: 'Access token is retrieved successfully!',
+// 		data: result,
+// 	});
+// });
 
 const forgotPassword = catchAsyncError(async (req: Request, res: Response) => {
 	await AuthServices.forgotPassword(req.body);
@@ -109,7 +106,7 @@ const resetPassword = catchAsyncError(async (req: Request, res: Response) => {
 
 const logout = catchAsyncError(async (req: Request, res: Response) => {
 	//res.clearCookie('refressToken');
-	res.cookie('refressToken', null, {
+	res.cookie('authToken', null, {
         expires: new Date(Date.now()),
         httpOnly: true
     })
@@ -121,19 +118,6 @@ const logout = catchAsyncError(async (req: Request, res: Response) => {
 		data: [],
 	});
 });
-
-// // Logout user   =>   /api/v1/logout
-// exports.logout = catchAsyncErrors(async (req, res, next) => {
-//     res.cookie('token', null, {
-//         expires: new Date(Date.now()),
-//         httpOnly: true
-//     })
-
-//     res.status(200).json({
-//         success: true,
-//         message: 'Logged out'
-//     })
-// })
 
 
 
@@ -165,7 +149,6 @@ export const AuthControllers = {
 	verifyEmail,
 	resendVerifyEmailCode,
 	loginUser,
-	refreshToken,
 	forgotPassword,
 	resetPassword,
 	logout,

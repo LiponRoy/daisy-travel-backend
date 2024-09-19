@@ -3,6 +3,8 @@ import express from 'express';
 import validateRequest from '../../middlewares/validateRequest';
 import { AuthControllers } from './auth.controller';
 import { AuthValidation } from './auth.validation';
+import auth from '../../middlewares/auth';
+import { USER_ROLE } from './auth.constant';
 
 const router = express.Router();
 
@@ -17,8 +19,8 @@ router.post(
 	AuthControllers.loginUser
 );
 router.post('/logout', AuthControllers.logout);
-router.get('/users', AuthControllers.getUsers);
-router.post('/userProfile', AuthControllers.userProfile);
+router.get('/users',auth(USER_ROLE.customer), AuthControllers.getUsers);
+router.post('/userProfile',AuthControllers.userProfile);
 router.post('/forgot-password', AuthControllers.forgotPassword);
 router.post('/reset-password/:token', AuthControllers.resetPassword);
 router.post('/verify-email', AuthControllers.verifyEmail);
@@ -27,10 +29,10 @@ router.post(
 	validateRequest(AuthValidation.resendVerifyEmailCode),
 	AuthControllers.resendVerifyEmailCode
 );
-router.post(
-	'/refresh-token',
-	validateRequest(AuthValidation.refreshTokenValidationSchema),
-	AuthControllers.refreshToken
-);
+// router.post(
+// 	'/refresh-token',
+// 	validateRequest(AuthValidation.refreshTokenValidationSchema),
+// 	AuthControllers.refreshToken
+// );
 
 export const AuthRoutes = router;

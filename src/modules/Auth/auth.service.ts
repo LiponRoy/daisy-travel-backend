@@ -149,52 +149,47 @@ const loginUser = async (payload: IUser) => {
 		role: user.role,
 	};
 
-	const accessToken = createToken(
+	const authToken = createToken(
 		jwtPayload,
 		config.jwt_access_secret as string,
 		config.jwt_access_expires_in as string
 	);
-	const refressToken = createToken(
-		jwtPayload,
-		config.jwt_refresh_secret as string,
-		config.jwt_refresh_expires_in as string
-	);
+
 
 	return {
-		accessToken,
-		refressToken,
+		authToken,
 		user,
 	};
 };
 
-const refreshToken = async (token: string) => {
-	// checking if the given token is valid
-	const decoded = verifyToken(token, config.jwt_refresh_secret as string);
+// const refreshToken = async (token: string) => {
+// 	// checking if the given token is valid
+// 	const decoded = verifyToken(token, config.jwt_refresh_secret as string);
 
-	const { email, role } = decoded;
+// 	const { email, role } = decoded;
 
-	// checking if the user is exist
-	const user = await User.isUserExistsByEmail(email);
+// 	// checking if the user is exist
+// 	const user = await User.isUserExistsByEmail(email);
 
-	if (!user) {
-		throw new ApiError(httpStatus.NOT_FOUND, 'This user is not found !');
-	}
+// 	if (!user) {
+// 		throw new ApiError(httpStatus.NOT_FOUND, 'This user is not found !');
+// 	}
 
-	const jwtPayload = {
-		email: user.email,
-		role: user.role,
-	};
+// 	const jwtPayload = {
+// 		email: user.email,
+// 		role: user.role,
+// 	};
 
-	const accessToken = createToken(
-		jwtPayload,
-		config.jwt_access_secret as string,
-		config.jwt_access_expires_in as string
-	);
+// 	const accessToken = createToken(
+// 		jwtPayload,
+// 		config.jwt_access_secret as string,
+// 		config.jwt_access_expires_in as string
+// 	);
 
-	return {
-		accessToken,
-	};
-};
+// 	return {
+// 		accessToken,
+// 	};
+// };
 
 const forgotPassword = async (payload: IUser) => {
 	// checking if the user is exist
@@ -284,7 +279,6 @@ export const AuthServices = {
 	verifyEmail,
 	resendVerifyEmailCode,
 	loginUser,
-	refreshToken,
 	forgotPassword,
 	resetPassword,
 	getUsers,

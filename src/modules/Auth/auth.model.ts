@@ -28,6 +28,11 @@ const userSchema = new Schema<IUser>(
 			type: String,
 			enum: ['admin', 'customer'],
 		},
+		image: {
+			type: String,
+			required: true,
+			unique: true,
+		},
 		lastLogin: {
 			type: Date,
 			default: Date.now,
