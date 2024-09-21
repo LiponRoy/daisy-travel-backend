@@ -46,7 +46,7 @@ const resendVerifyEmailCode = catchAsyncError(
 
 const loginUser = catchAsyncError(async (req: Request, res: Response) => {
 	const result = await AuthServices.loginUser(req.body);
-	const { authToken,user } = result;
+	const { authToken, user } = result;
 
 	res.cookie('authToken', authToken, {
 		secure: config.node_env === 'production',
@@ -59,21 +59,12 @@ const loginUser = catchAsyncError(async (req: Request, res: Response) => {
 		statusCode: httpStatus.OK,
 		success: true,
 		message: 'User is logged in successfully!',
-		data: user
+		data: {
+			user,
+			authToken,
+		},
 	});
 });
-
-// const refreshToken = catchAsyncError(async (req: Request, res: Response) => {
-// 	const { refreshToken } = req.cookies;
-// 	const result = await AuthServices.refreshToken(refreshToken);
-
-// 	sendResponse(res, {
-// 		statusCode: httpStatus.OK,
-// 		success: true,
-// 		message: 'Access token is retrieved successfully!',
-// 		data: result,
-// 	});
-// });
 
 const forgotPassword = catchAsyncError(async (req: Request, res: Response) => {
 	await AuthServices.forgotPassword(req.body);
@@ -107,9 +98,9 @@ const resetPassword = catchAsyncError(async (req: Request, res: Response) => {
 const logout = catchAsyncError(async (req: Request, res: Response) => {
 	//res.clearCookie('refressToken');
 	res.cookie('authToken', null, {
-        expires: new Date(Date.now()),
-        httpOnly: true
-    })
+		expires: new Date(Date.now()),
+		httpOnly: true,
+	});
 
 	sendResponse(res, {
 		statusCode: httpStatus.OK,
@@ -118,8 +109,6 @@ const logout = catchAsyncError(async (req: Request, res: Response) => {
 		data: [],
 	});
 });
-
-
 
 const getUsers = catchAsyncError(async (req: Request, res: Response) => {
 	const users = await AuthServices.getUsers();
@@ -132,15 +121,16 @@ const getUsers = catchAsyncError(async (req: Request, res: Response) => {
 	});
 });
 
-const userProfile = catchAsyncError(async (req: Request, res: Response) => {
-	const{email}=req.body
-	const users = await AuthServices.userProfile(email);
+const getMe = catchAsyncError(async (req: Request, res: Response) => {
+	const { email, role } = req.user;
+	console.log('user....', req.user);
+	const result = await AuthServices.getMe(email, role);
 
 	sendResponse(res, {
 		statusCode: httpStatus.OK,
 		success: true,
-		message: 'Got profile user',
-		data: users,
+		message: 'User is retrieved successfully',
+		data: result,
 	});
 });
 
@@ -153,5 +143,5 @@ export const AuthControllers = {
 	resetPassword,
 	logout,
 	getUsers,
-	userProfile,
+	getMe,
 };

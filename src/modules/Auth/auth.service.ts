@@ -151,45 +151,15 @@ const loginUser = async (payload: IUser) => {
 
 	const authToken = createToken(
 		jwtPayload,
-		config.jwt_access_secret as string,
-		config.jwt_access_expires_in as string
+		config.jwt_auth_secret as string,
+		config.jwt_auth_expires_in as string
 	);
-
 
 	return {
 		authToken,
 		user,
 	};
 };
-
-// const refreshToken = async (token: string) => {
-// 	// checking if the given token is valid
-// 	const decoded = verifyToken(token, config.jwt_refresh_secret as string);
-
-// 	const { email, role } = decoded;
-
-// 	// checking if the user is exist
-// 	const user = await User.isUserExistsByEmail(email);
-
-// 	if (!user) {
-// 		throw new ApiError(httpStatus.NOT_FOUND, 'This user is not found !');
-// 	}
-
-// 	const jwtPayload = {
-// 		email: user.email,
-// 		role: user.role,
-// 	};
-
-// 	const accessToken = createToken(
-// 		jwtPayload,
-// 		config.jwt_access_secret as string,
-// 		config.jwt_access_expires_in as string
-// 	);
-
-// 	return {
-// 		accessToken,
-// 	};
-// };
 
 const forgotPassword = async (payload: IUser) => {
 	// checking if the user is exist
@@ -263,15 +233,16 @@ const getUsers = async () => {
 	return { users };
 };
 
-const userProfile = async (email:string) => {
-
-	const user = await User.findOne({email});
-
-	if (!user) {
-		throw new ApiError(409, 'Profile user not found');
+const getMe = async (email: string, role: string) => {
+	let result = null;
+	if (role === 'customer') {
+		result = await User.findOne({ email });
 	}
+	// if (role === 'admin') {
+	// 	result = await Admin.findOne({ email }).populate('user');
+	// }
 
-	return { user };
+	return result;
 };
 
 export const AuthServices = {
@@ -282,5 +253,5 @@ export const AuthServices = {
 	forgotPassword,
 	resetPassword,
 	getUsers,
-	userProfile,
+	getMe,
 };

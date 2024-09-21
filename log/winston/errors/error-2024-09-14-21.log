@@ -1,6 +1,0 @@
-{
-  message: 'Failed to connect database MongoNetworkError: connect ETIMEDOUT 3.6.242.39:27017',
-  level: 'error',
-  label: 'Lipon',
-  timestamp: '2024-09-14T15:39:51.952Z'
-}

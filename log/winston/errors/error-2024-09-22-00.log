@@ -1,0 +1,18 @@
+{
+  message: 'Failed to connect database Error: querySrv ETIMEOUT _mongodb._tcp.cluster0.9nuiwmf.mongodb.net',
+  level: 'error',
+  label: 'Lipon',
+  timestamp: '2024-09-21T18:29:52.051Z'
+}
+{
+  message: 'Failed to connect database Error: queryTxt ETIMEOUT cluster0.9nuiwmf.mongodb.net',
+  level: 'error',
+  label: 'Lipon',
+  timestamp: '2024-09-21T18:34:28.617Z'
+}
+{
+  message: 'Failed to connect database Error: querySrv ETIMEOUT _mongodb._tcp.cluster0.9nuiwmf.mongodb.net',
+  level: 'error',
+  label: 'Lipon',
+  timestamp: '2024-09-21T18:38:34.454Z'
+}

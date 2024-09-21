@@ -6,49 +6,69 @@
     "auditLog": "E:\\github all project\\daisy-travel-backend\\log\\winston\\success\\.35173e6b18c3eca9b8152eaed20ec31f9bbe380b-audit.json",
     "files": [
         {
-            "date": 1726077947445,
-            "name": "E:\\github all project\\daisy-travel-backend\\log\\winston\\success\\success-2024-09-12-00.log",
-            "hash": "caf015db3decc756b31f20cd2083eaf6fc74435d55d4ec14a47f17fef7183b5f"
+            "date": 1726817012439,
+            "name": "E:\\github all project\\daisy-travel-backend\\log\\winston\\success\\success-2024-09-20-13.log",
+            "hash": "384eac56388b1e17fc63fe3fb94dbb5fb3ffa22fd628f5dce359f6063a5338c6"
         },
         {
-            "date": 1726081219702,
-            "name": "E:\\github all project\\daisy-travel-backend\\log\\winston\\success\\success-2024-09-12-01.log",
-            "hash": "699130a078e84dfa4fdec8b03e0fe7f5960583f23a76dd44c16d1334e5c9ec27"
+            "date": 1726820461356,
+            "name": "E:\\github all project\\daisy-travel-backend\\log\\winston\\success\\success-2024-09-20-14.log",
+            "hash": "12608eaca789834c04d3a19075508935b80ab4621977d89e8967a672e95cf426"
         },
         {
-            "date": 1726207165162,
-            "name": "E:\\github all project\\daisy-travel-backend\\log\\winston\\success\\success-2024-09-13-11.log",
-            "hash": "d1cbd4641adb4d37f96455135d78f561b2fe49a42defae4b4ac28a5d067d0205"
+            "date": 1726835250370,
+            "name": "E:\\github all project\\daisy-travel-backend\\log\\winston\\success\\success-2024-09-20-18.log",
+            "hash": "3617d70fca4133fbd38edfeb47d93992fa4e57c2be7228f2da1e2f3d8a59dbc7"
         },
         {
-            "date": 1726241010405,
-            "name": "E:\\github all project\\daisy-travel-backend\\log\\winston\\success\\success-2024-09-13-21.log",
-            "hash": "a8fd9968328cad7dd425698e2580b250a57e842cf2d3e93dc977495add3c40c5"
+            "date": 1726837606142,
+            "name": "E:\\github all project\\daisy-travel-backend\\log\\winston\\success\\success-2024-09-20-19.log",
+            "hash": "445fa49d2f9eb20d771d5bd43218bf9a7e0ed3fe789a3b67220e55d6e1609435"
         },
         {
-            "date": 1726243758456,
-            "name": "E:\\github all project\\daisy-travel-backend\\log\\winston\\success\\success-2024-09-13-22.log",
-            "hash": "2ba4ed659507ecae1115ede7a4735be76371c8ef9f513ce38f899accd16c80a8"
+            "date": 1726840881563,
+            "name": "E:\\github all project\\daisy-travel-backend\\log\\winston\\success\\success-2024-09-20-20.log",
+            "hash": "30510904032720bcf4c80fdb0e9ef38551f17244fbebf0d4b542ead7e60be53c"
         },
         {
-            "date": 1726250054969,
-            "name": "E:\\github all project\\daisy-travel-backend\\log\\winston\\success\\success-2024-09-13-23.log",
-            "hash": "09e865f75c7e6b8509d4ac3949fd63663fe8ca9cf820ede7b0d8c7ed189f09d8"
+            "date": 1726844459973,
+            "name": "E:\\github all project\\daisy-travel-backend\\log\\winston\\success\\success-2024-09-20-21.log",
+            "hash": "49c7cf90938a4f30e72060fa2b6c4419c21056609191bcedd851e3b0c8d67779"
         },
         {
-            "date": 1726250592459,
-            "name": "E:\\github all project\\daisy-travel-backend\\log\\winston\\success\\success-2024-09-14-00.log",
-            "hash": "39853ffdbaaf18d463b92c1fac4fd1e2794e0f9e436c73c0aea4f6ab9846d82b"
+            "date": 1726902769407,
+            "name": "E:\\github all project\\daisy-travel-backend\\log\\winston\\success\\success-2024-09-21-13.log",
+            "hash": "fdd1b6235b5e4d4e36731fc6ff0c03e609d0e76793db412a5a345dc69c4cd8d8"
         },
         {
-            "date": 1726328367175,
-            "name": "E:\\github all project\\daisy-travel-backend\\log\\winston\\success\\success-2024-09-14-21.log",
-            "hash": "8c2af8a60c8f1739b39cc5a3f10e9888231068f275b24ec1741b500ae3324dd6"
+            "date": 1726905716158,
+            "name": "E:\\github all project\\daisy-travel-backend\\log\\winston\\success\\success-2024-09-21-14.log",
+            "hash": "c15256fb93d7b1b31a9c766c1a58abfd1ff984de24c9fdac713f35c1d214edd2"
         },
         {
-            "date": 1726341381177,
-            "name": "E:\\github all project\\daisy-travel-backend\\log\\winston\\success\\success-2024-09-15-01.log",
-            "hash": "7ac4a2e8bd15837bef1b83a7aea2a388b5ea6c87360d11ba5067d82f2b6fc3a6"
+            "date": 1726925263513,
+            "name": "E:\\github all project\\daisy-travel-backend\\log\\winston\\success\\success-2024-09-21-19.log",
+            "hash": "3b06fd1ab08d22ac1d4a2776ab9e6914621c7a99a76721f0d8c0bef84ab7fec1"
+        },
+        {
+            "date": 1726932951493,
+            "name": "E:\\github all project\\daisy-travel-backend\\log\\winston\\success\\success-2024-09-21-21.log",
+            "hash": "151fda1336f41ff46ccffd151d06d4a0de8030c5e998a5e1ee7395cec318876d"
+        },
+        {
+            "date": 1726937223001,
+            "name": "E:\\github all project\\daisy-travel-backend\\log\\winston\\success\\success-2024-09-21-22.log",
+            "hash": "66767be7ab853bdf1303c243f8f2d6164f85eb9021ecedb365ce3e0440657071"
+        },
+        {
+            "date": 1726938164665,
+            "name": "E:\\github all project\\daisy-travel-backend\\log\\winston\\success\\success-2024-09-21-23.log",
+            "hash": "c380605b02c694e02feafaa1ef13e8858d41e183c4dddc504a8d76eea0e79202"
+        },
+        {
+            "date": 1726941717451,
+            "name": "E:\\github all project\\daisy-travel-backend\\log\\winston\\success\\success-2024-09-22-00.log",
+            "hash": "2747de48d4c99cf63f2964a7e66dc896d45d7f9c275b62f4f7e2fbd3279b88c8"
         }
     ],
     "hashType": "sha256"

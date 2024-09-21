@@ -1,0 +1,6 @@
+{
+  message: 'Failed to connect database Error: queryTxt ETIMEOUT cluster0.9nuiwmf.mongodb.net',
+  level: 'error',
+  label: 'Lipon',
+  timestamp: '2024-09-20T07:24:48.196Z'
+}

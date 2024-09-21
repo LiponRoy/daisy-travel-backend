@@ -19,11 +19,13 @@ router.post(
 	AuthControllers.loginUser
 );
 router.post('/logout', AuthControllers.logout);
-router.get('/users',auth(USER_ROLE.customer), AuthControllers.getUsers);
-router.post('/userProfile',AuthControllers.userProfile);
+router.get('/users', auth(USER_ROLE.customer), AuthControllers.getUsers);
+router.get('/userProfile', auth(USER_ROLE.customer), AuthControllers.getMe);
+
 router.post('/forgot-password', AuthControllers.forgotPassword);
 router.post('/reset-password/:token', AuthControllers.resetPassword);
 router.post('/verify-email', AuthControllers.verifyEmail);
+
 router.post(
 	'/resend-Verify-Email-Code',
 	validateRequest(AuthValidation.resendVerifyEmailCode),
