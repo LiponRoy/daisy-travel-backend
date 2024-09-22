@@ -20,7 +20,10 @@ router.post(
 );
 router.post('/logout', AuthControllers.logout);
 router.get('/users', auth(USER_ROLE.customer), AuthControllers.getUsers);
-router.get('/userProfile', auth(USER_ROLE.customer), AuthControllers.getMe);
+
+
+router.get('/userProfile', auth(USER_ROLE.admin), AuthControllers.getMe);
+
 
 router.post('/forgot-password', AuthControllers.forgotPassword);
 router.post('/reset-password/:token', AuthControllers.resetPassword);

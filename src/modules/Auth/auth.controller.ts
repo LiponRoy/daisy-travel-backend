@@ -123,7 +123,7 @@ const getUsers = catchAsyncError(async (req: Request, res: Response) => {
 
 const getMe = catchAsyncError(async (req: Request, res: Response) => {
 	const { email, role } = req.user;
-	console.log('user....', req.user);
+	// console.log('user....rrr...', req.user);
 	const result = await AuthServices.getMe(email, role);
 
 	sendResponse(res, {

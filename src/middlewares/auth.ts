@@ -29,7 +29,7 @@ const auth = (...requiredRoles: any) => {
 
 				const { email, role } = decoded;
 
-				// // checking if the user is exist
+				//// checking if the user is exist
 				const user = await User.isUserExistsByEmail(email);
 
 				if (!user) {
