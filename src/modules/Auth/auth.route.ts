@@ -22,7 +22,7 @@ router.post('/logout', AuthControllers.logout);
 router.get('/users', auth(USER_ROLE.customer), AuthControllers.getUsers);
 
 
-router.get('/userProfile', auth(USER_ROLE.admin), AuthControllers.getMe);
+router.get('/getMe', auth(USER_ROLE.customer), AuthControllers.getMe);
 
 
 router.post('/forgot-password', AuthControllers.forgotPassword);

@@ -17,6 +17,8 @@ const signupUser = catchAsyncError(async (req: Request, res: Response) => {
 		data: newUser,
 	});
 });
+
+
 const verifyEmail = catchAsyncError(async (req: Request, res: Response) => {
 	const { code } = req.body;
 	const result = await AuthServices.verifyEmail(code);
@@ -123,7 +125,6 @@ const getUsers = catchAsyncError(async (req: Request, res: Response) => {
 
 const getMe = catchAsyncError(async (req: Request, res: Response) => {
 	const { email, role } = req.user;
-	// console.log('user....rrr...', req.user);
 	const result = await AuthServices.getMe(email, role);
 
 	sendResponse(res, {

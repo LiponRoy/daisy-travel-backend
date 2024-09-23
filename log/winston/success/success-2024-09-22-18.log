@@ -1,0 +1,12 @@
+{
+  message: 'MongoDB Connected -YES 4000',
+  level: 'info',
+  label: 'Lipon',
+  timestamp: '2024-09-22T12:38:03.705Z'
+}
+{
+  message: 'App listening on port -YES  4000',
+  level: 'info',
+  label: 'Lipon',
+  timestamp: '2024-09-22T12:38:03.711Z'
+}
