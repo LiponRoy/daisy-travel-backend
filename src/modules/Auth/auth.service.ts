@@ -235,9 +235,10 @@ const getUsers = async () => {
 
 const getMe = async (email: string, role: string) => {
 	let result = null;
-	if (role === 'customer') {
-		result = await User.findOne({ email });
-	}
+	result = await User.findOne({ email });
+	// if (role === 'customer') {
+	// 	result = await User.findOne({ email });
+	// }
 	// if (role === 'admin') {
 	// 	result = await Admin.findOne({ email }).populate('user');
 	// }

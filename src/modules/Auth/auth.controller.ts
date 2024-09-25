@@ -18,7 +18,6 @@ const signupUser = catchAsyncError(async (req: Request, res: Response) => {
 	});
 });
 
-
 const verifyEmail = catchAsyncError(async (req: Request, res: Response) => {
 	const { code } = req.body;
 	const result = await AuthServices.verifyEmail(code);

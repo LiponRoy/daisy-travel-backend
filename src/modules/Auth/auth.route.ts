@@ -3,8 +3,8 @@ import express from 'express';
 import validateRequest from '../../middlewares/validateRequest';
 import { AuthControllers } from './auth.controller';
 import { AuthValidation } from './auth.validation';
-import auth from '../../middlewares/auth';
 import { USER_ROLE } from './auth.constant';
+import { authorizeRoles, isAuthenticatedUser } from '../../middlewares/auth';
 
 const router = express.Router();
 
@@ -19,11 +19,14 @@ router.post(
 	AuthControllers.loginUser
 );
 router.post('/logout', AuthControllers.logout);
-router.get('/users', auth(USER_ROLE.customer), AuthControllers.getUsers);
+router.get(
+	'/users',
+	isAuthenticatedUser(),
+	authorizeRoles('admin'),
+	AuthControllers.getUsers
+);
 
-
-router.get('/getMe', auth(USER_ROLE.customer), AuthControllers.getMe);
-
+router.get('/getMe', isAuthenticatedUser(), AuthControllers.getMe);
 
 router.post('/forgot-password', AuthControllers.forgotPassword);
 router.post('/reset-password/:token', AuthControllers.resetPassword);

@@ -2,48 +2,39 @@ import { NextFunction, Request, Response } from 'express';
 import httpStatus from 'http-status';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import config from '../config';
-//import AppError from '../errors/AppError';
 import { catchAsyncError } from '../utils/catchAsyncErrors';
 import ApiError from '../errors/ApiError';
 import { User } from '../modules/Auth/auth.model';
-import { verifyToken } from '../modules/Auth/auth.utils';
 
-const auth = (...requiredRoles: any) => {
+export const isAuthenticatedUser = () => {
 	return catchAsyncError(
 		async (req: Request, res: Response, next: NextFunction) => {
-			try {
-				const token = req.cookies.authToken;
+			const token = req.cookies.authToken;
+			console.log('tokenn', token);
+			// checking if the token is missing
+			if (!token) {
+				throw new ApiError(
+					httpStatus.UNAUTHORIZED,
+					'Login first to access this resource.'
+				);
+			}
 
-				// checking if the token is missing
-				if (!token) {
-					throw new ApiError(
-						httpStatus.UNAUTHORIZED,
-						'You are not authorized!'
-					);
-				}
+			try {
 				// Verify the token
 				const decoded = jwt.verify(
 					token,
 					config.jwt_auth_secret as string
 				) as JwtPayload;
 
-				const { email, role } = decoded;
+				console.log('decoded ', decoded);
 
-				//// checking if the user is exist
-				const user = await User.isUserExistsByEmail(email);
-
-				if (!user) {
-					throw new ApiError(httpStatus.NOT_FOUND, 'This user is not found !');
-				}
-				// Check if the user has the required roles
-				if (requiredRoles && !requiredRoles.includes(role)) {
-					throw new ApiError(
-						httpStatus.UNAUTHORIZED,
-						'You are not authorized  hi!'
-					);
-				}
 				// Attach the user payload to the request object
-				req.user = decoded as JwtPayload & { role: string };
+				req.user = (await User.isUserExistsByEmail(
+					decoded.email
+				)) as JwtPayload;
+
+				console.log('req.user ', req.user.role);
+
 				// Proceed to the next middleware or controllers
 				next();
 			} catch (error) {
@@ -53,4 +44,56 @@ const auth = (...requiredRoles: any) => {
 	);
 };
 
-export default auth;
+// Handling users roles
+export const authorizeRoles = (...roles: any) => {
+	return (req: Request, res: Response, next: NextFunction) => {
+		if (!roles.includes(req.user.role)) {
+			throw new ApiError(
+				httpStatus.UNAUTHORIZED,
+				`Role (${req.user.role}) is not allowed to acccess this resource`
+			);
+		}
+		next();
+	};
+};
+
+// const auth = (...requiredRoles: any) => {
+// 	return catchAsyncError(
+// 		async (req: Request, res: Response, next: NextFunction) => {
+// 			try {
+// 				const token = req.cookies.authToken;
+
+// 				// checking if the token is missing
+// 				if (!token) {
+// 					throw new ApiError(
+// 						httpStatus.UNAUTHORIZED,
+// 						'You are not authorized!'
+// 					);
+// 				}
+// 				// Verify the token
+// 				const decoded = jwt.verify(
+// 					token,
+// 					config.jwt_auth_secret as string
+// 				) as JwtPayload;
+
+// 				const { email, role } = decoded;
+
+// 				// Check if the user has the required roles
+// 				if (requiredRoles && !requiredRoles.includes(role)) {
+// 					throw new ApiError(
+// 						httpStatus.UNAUTHORIZED,
+// 						'You are not authorized  hi!'
+// 					);
+// 				}
+// 				// Attach the user payload to the request object
+// 				req.user = decoded as JwtPayload & { role: string };
+// 				// Proceed to the next middleware or controllers
+// 				next();
+// 			} catch (error) {
+// 				throw new ApiError(httpStatus.UNAUTHORIZED, 'Invalid token !');
+// 			}
+// 		}
+// 	);
+// };
+
+//export default auth;
