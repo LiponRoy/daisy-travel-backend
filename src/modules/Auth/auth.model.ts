@@ -27,12 +27,16 @@ const userSchema = new Schema<IUser>(
 		role: {
 			type: String,
 			enum: ['admin', 'customer'],
+			default:"customer"
 		},
-		image: {
-			type: String,
-			required: true,
-			unique: true,
-		},
+		// picture: {
+		// 	picture_url:{
+		// 		type: String,
+		// 		required: true,
+		// 	}
+			
+		// },
+		image: { type: String},
 		lastLogin: {
 			type: Date,
 			default: Date.now,

@@ -7,8 +7,15 @@ import ApiError from '../../errors/ApiError';
 import { Request, Response } from 'express';
 
 const signupUser = catchAsyncError(async (req: Request, res: Response) => {
+	console.log("file from controller::: ",req.file);
 	const { ...users } = req.body;
-	const newUser = await AuthServices.signupUser(users);
+
+	if (!req.file) {
+		throw new ApiError(400,"No file found lip")
+	  }
+	//const picture = req.file?.filename;
+	
+	const newUser = await AuthServices.signupUser(users, req.file);
 
 	sendResponse(res, {
 		statusCode: httpStatus.OK,

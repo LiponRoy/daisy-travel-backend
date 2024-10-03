@@ -5,12 +5,14 @@ import { AuthControllers } from './auth.controller';
 import { AuthValidation } from './auth.validation';
 import { USER_ROLE } from './auth.constant';
 import { authorizeRoles, isAuthenticatedUser } from '../../middlewares/auth';
+import { upload } from '../../middlewares/sendImageToCloudinary';
+
 
 const router = express.Router();
 
 router.post(
 	'/signup',
-	validateRequest(AuthValidation.userValidationZodSchema),
+	upload.single('image'),
 	AuthControllers.signupUser
 );
 router.post(
@@ -27,6 +29,7 @@ router.get(
 );
 
 router.get('/getMe', isAuthenticatedUser(), AuthControllers.getMe);
+//router.get('/updateMe',upload.single("image"), isAuthenticatedUser(), AuthControllers.getMe);
 
 router.post('/forgot-password', AuthControllers.forgotPassword);
 router.post('/reset-password/:token', AuthControllers.resetPassword);
