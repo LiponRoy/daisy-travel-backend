@@ -7,27 +7,9 @@ import { createToken, verifyToken } from "./auth.utils";
 import bcrypt from "bcrypt";
 import crypto from "crypto";
 import ApiError from "../../errors/ApiError";
-import path from "path";
-import fs from "fs";
-import { sendImageToCloudinary } from "../../middlewares/sendImageToCloudinary";
-// import { v2 as cloudinary } from 'cloudinary';
-//  // Configuration
-//  cloudinary.config({ 
-//   cloud_name: 'lipon123', 
-//   api_key: '112674951942373', 
-//   api_secret: 'qkFKFD62syvpFSFuGOV9bqN52vE' // Click 'View API Keys' above to copy your API secret
-// });
 
-const signupUser = async (payload: IUser, myFile: any) => {
-	//console.log("Signup services: ",payload)
-
-	console.log("file from services::: ",myFile)
-	console.log("file path from services::: ",myFile?.path)
-
-  const { name, email, phone, password, role } = payload;
-
- // console.log("signSignup services file: ",myFile?.path)
-
+const signupUser = async (payload: IUser) => {
+  const { email } = payload;
   // Check if user exists
   const user = await User.isUserExistsByEmail(email);
 
@@ -42,32 +24,11 @@ const signupUser = async (payload: IUser, myFile: any) => {
   ).toString();
   // Expire time in 1 hour
   //const verificationTokenExpireTime = Date.now() + 1 * 60 * 60 * 1000; // 1 hour
-  const verificationTokenExpireTime = Date.now() + 1 * 60 * 1000; // 1 minute
-
-
-
-  // // Upload image to cloudinary
-  // const result = await cloudinary.uploader.upload(myFile.path, {
-	// folder: "tpn-img",
-  // });
-
-  // console.log("services- result",result)
-
-  // // Remove file from local uploads folder after uploading
-  //  fs.unlinkSync(myFile.path);
-
-
-    //send image to cloudinary
-    const { secure_url } = await sendImageToCloudinary(email, myFile.path);
+  const verificationTokenExpireTime = Date.now() + 10 * 60 * 1000; // 10 minute
 
   // create user
   const newUser = await User.create({
-    name,
-    email,
-    phone,
-    password,
-    role,
-    image: secure_url,
+    ...payload,
     verificationToken,
     verificationTokenExpiresAt: verificationTokenExpireTime,
   });
@@ -88,6 +49,7 @@ const signupUser = async (payload: IUser, myFile: any) => {
     newUser,
   };
 };
+
 const verifyEmail = async (code: string) => {
   const user = await User.findOne({
     verificationToken: code,
@@ -286,6 +248,97 @@ const getMe = async (email: string, role: string) => {
 
   return result;
 };
+const updateProfile = async (payload:any,photoFile:any) => {
+  const { name, email, phone,image,_id} = payload;
+
+    // Check if user exists
+    const user = await User.isUserExistsByEmail(email);
+
+    if (user) {
+      throw new ApiError(409, "User already exists");
+    }
+
+  // let result = null;
+  // result = await User.findOne({ email });
+
+  // try {
+  //   const updatedUser = await User.findByIdAndUpdate(
+  //     id,
+  //     {
+  //       name,
+  //       email,
+  //       phoneNumber,
+  //       gender,
+  //     },
+  //     { new: true, runValidators: true } // Options: 'new' returns the updated document, 'runValidators' ensures validation runs on update
+  //   );
+
+  //   if (!updatedUser) {
+  //     return res.status(404).json({ message: 'User not found' });
+  //   }
+  // // if (role === 'customer') {
+  // // 	result = await User.findOne({ email });
+  // // }
+  // // if (role === 'admin') {
+  // // 	result = await Admin.findOne({ email }).populate('user');
+  // // }
+  const result="Nothing ..."
+
+  return result;
+};
+
+// const updateProfile = async (payload: IUser, myFile: any) => {
+
+//   const { name, email, phone, password, role } = payload;
+
+//   const user = await User.isUserExistsByEmail(email);
+
+//   if (user) {
+//     throw new ApiError(409, "User already exists");
+//   }
+
+//   //const session = await mongoose.startSession();
+
+//   // for verification by Email
+//   // make random 6 digit of code
+//   const verificationToken = Math.floor(
+//     100000 + Math.random() * 900000
+//   ).toString();
+//   // Expire time in 1 hour
+//   //const verificationTokenExpireTime = Date.now() + 1 * 60 * 60 * 1000; // 1 hour
+//   const verificationTokenExpireTime = Date.now() + 1 * 60 * 1000; // 1 minute
+
+//   //send image to cloudinary
+//     const { secure_url } = await sendImageToCloudinary(email, myFile.path);
+
+//   // create user
+//   const newUser = await User.create({
+//     name,
+//     email,
+//     phone,
+//     password,
+//     role,
+//     image: secure_url,
+//     verificationToken,
+//     verificationTokenExpiresAt: verificationTokenExpireTime,
+//   });
+
+//   // send email
+//   await sendEmail({
+//     to: email,
+//     subject: "Your Verification Code",
+//     text: verificationToken,
+//   });
+
+//   // If failed to create an user
+//   if (!newUser) {
+//     throw new ApiError(httpStatus.BAD_REQUEST, "Failed to create user");
+//   }
+
+//   return {
+//     newUser,
+//   };
+// };
 
 export const AuthServices = {
   signupUser,
@@ -296,4 +349,5 @@ export const AuthServices = {
   resetPassword,
   getUsers,
   getMe,
+  updateProfile
 };

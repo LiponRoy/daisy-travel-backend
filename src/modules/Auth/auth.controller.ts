@@ -7,23 +7,17 @@ import ApiError from '../../errors/ApiError';
 import { Request, Response } from 'express';
 
 const signupUser = catchAsyncError(async (req: Request, res: Response) => {
-	console.log("file from controller::: ",req.file);
 	const { ...users } = req.body;
-
-	if (!req.file) {
-		throw new ApiError(400,"No file found lip")
-	  }
-	//const picture = req.file?.filename;
 	
-	const newUser = await AuthServices.signupUser(users, req.file);
-
+	const newUser = await AuthServices.signupUser(users);
+  
 	sendResponse(res, {
-		statusCode: httpStatus.OK,
-		success: true,
-		message: 'User Register Successfully Completed!',
-		data: newUser,
+	  statusCode: httpStatus.OK,
+	  success: true,
+	  message: "User Registered Successfully",
+	  data: newUser,
 	});
-});
+  });
 
 const verifyEmail = catchAsyncError(async (req: Request, res: Response) => {
 	const { code } = req.body;
@@ -141,6 +135,21 @@ const getMe = catchAsyncError(async (req: Request, res: Response) => {
 	});
 });
 
+const updateProfile = catchAsyncError(async (req: Request, res: Response) => {
+	const { ...users } = req.body;
+	if (!req.file) {
+		throw new ApiError(400,"No file found lip")
+	  }
+	const result = await AuthServices.updateProfile(users,req.file);
+
+	sendResponse(res, {
+		statusCode: httpStatus.OK,
+		success: true,
+		message: 'Profile Update',
+		data: result,
+	});
+});
+
 export const AuthControllers = {
 	signupUser,
 	verifyEmail,
@@ -151,4 +160,5 @@ export const AuthControllers = {
 	logout,
 	getUsers,
 	getMe,
+	updateProfile
 };

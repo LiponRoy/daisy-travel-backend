@@ -6,7 +6,7 @@ export interface IUser {
 	phone: string;
 	password: string;
 	role: 'admin' | 'customer';
-	image: string;
+	image?: string;
 	lastLogin: Date;
 	isVerified: Boolean;
 	resetPasswordToken: String;
