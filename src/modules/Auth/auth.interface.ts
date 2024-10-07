@@ -6,7 +6,8 @@ export interface IUser {
 	phone: string;
 	password: string;
 	role: 'admin' | 'customer';
-	image?: string;
+	avatar?: string;
+	cloudinary_id?: string;
 	lastLogin: Date;
 	isVerified: Boolean;
 	resetPasswordToken: String;

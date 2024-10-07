@@ -137,10 +137,12 @@ const getMe = catchAsyncError(async (req: Request, res: Response) => {
 
 const updateProfile = catchAsyncError(async (req: Request, res: Response) => {
 	const { ...users } = req.body;
-	if (!req.file) {
-		throw new ApiError(400,"No file found lip")
-	  }
-	const result = await AuthServices.updateProfile(users,req.file);
+	// if (!req.file) {
+	// 	throw new ApiError(400,"No file found ")
+	//   }
+	const result:any = await AuthServices.updateProfile(users,req.file);
+
+
 
 	sendResponse(res, {
 		statusCode: httpStatus.OK,

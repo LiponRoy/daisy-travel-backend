@@ -7,6 +7,7 @@ import { createToken, verifyToken } from "./auth.utils";
 import bcrypt from "bcrypt";
 import crypto from "crypto";
 import ApiError from "../../errors/ApiError";
+import cloudinary from "../../utils/cloudinary";
 
 const signupUser = async (payload: IUser) => {
   const { email } = payload;
@@ -248,15 +249,49 @@ const getMe = async (email: string, role: string) => {
 
   return result;
 };
-const updateProfile = async (payload:any,photoFile:any) => {
-  const { name, email, phone,image,_id} = payload;
+const updateProfile = async (payload: Partial<IUser>, photoFile: any) => {
+  const { name, phone, email } = payload;
 
-    // Check if user exists
-    const user = await User.isUserExistsByEmail(email);
+  console.log("profileUpdate file: ", photoFile);
 
-    if (user) {
-      throw new ApiError(409, "User already exists");
+  // Check if user exists
+  let user: any = await User.isUserExistsByEmail(email as string);
+
+  //console.log("profileUpdate user: ", user._id.toString());
+
+  if (!user) {
+    throw new ApiError(409, "User Not Found");
+  }
+
+  // Upload image to cloudinary
+  let result: any
+  if(photoFile){
+  // if file found then we need to use cloudinary otherways not
+    result = await cloudinary.uploader.upload(photoFile.path,{ folder: "tpn-img"});
+
+    if (user.cloudinary_id) {
+      await cloudinary.uploader.destroy(user.cloudinary_id);
     }
+
+  }
+
+  
+
+  const data = {
+    name: name,
+    phone: phone,
+    avatar: result?.secure_url || user.avatar,
+    cloudinary_id: result?.public_id || user.cloudinary_id,
+  };
+
+  user = await User.findByIdAndUpdate(user._id.toString(), data, {
+    new: true,
+  });
+  // res.json(user);
+
+  return {
+    user,
+  };
 
   // let result = null;
   // result = await User.findOne({ email });
@@ -282,7 +317,7 @@ const updateProfile = async (payload:any,photoFile:any) => {
   // // if (role === 'admin') {
   // // 	result = await Admin.findOne({ email }).populate('user');
   // // }
-  const result="Nothing ..."
+  //const result = "Nothing ...";
 
   return result;
 };
@@ -349,5 +384,5 @@ export const AuthServices = {
   resetPassword,
   getUsers,
   getMe,
-  updateProfile
+  updateProfile,
 };

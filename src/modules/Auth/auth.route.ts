@@ -5,15 +5,22 @@ import { AuthControllers } from './auth.controller';
 import { AuthValidation } from './auth.validation';
 import { USER_ROLE } from './auth.constant';
 import { authorizeRoles, isAuthenticatedUser } from '../../middlewares/auth';
-import { upload } from '../../middlewares/sendImageToCloudinary';
+import upload from '../../middlewares/multerMiddleware';
 
 
 const router = express.Router();
 
 router.post(
 	'/signup',
-	upload.single('image'),
+	validateRequest(AuthValidation.userValidationZodSchema),
 	AuthControllers.signupUser
+);
+
+// Profile update 
+router.post(
+	'/profileUpdate',
+	upload.single("avatar"),
+	AuthControllers.updateProfile
 );
 router.post(
 	'/login',
@@ -21,6 +28,7 @@ router.post(
 	AuthControllers.loginUser
 );
 router.post('/logout', AuthControllers.logout);
+
 router.get(
 	'/users',
 	isAuthenticatedUser(),
