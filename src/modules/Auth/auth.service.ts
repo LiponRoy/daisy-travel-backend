@@ -246,9 +246,9 @@ const getMe = async (email: string, role: string) => {
   // if (role === 'admin') {
   // 	result = await Admin.findOne({ email }).populate('user');
   // }
-
   return result;
 };
+
 const updateProfile = async (payload: Partial<IUser>, photoFile: any) => {
   const { name, phone, email } = payload;
 
@@ -257,123 +257,49 @@ const updateProfile = async (payload: Partial<IUser>, photoFile: any) => {
   // Check if user exists
   let user: any = await User.isUserExistsByEmail(email as string);
 
-  //console.log("profileUpdate user: ", user._id.toString());
-
   if (!user) {
     throw new ApiError(409, "User Not Found");
   }
 
-  // Upload image to cloudinary
-  let result: any
-  if(photoFile){
-  // if file found then we need to use cloudinary otherways not
-    result = await cloudinary.uploader.upload(photoFile.path,{ folder: "tpn-img"});
+     // Prepare for Cloudinary upload
+     let result: any = null;
+     if (photoFile) {
+       try {
+         // Upload image to Cloudinary
+         result = await cloudinary.uploader.upload(photoFile.path, {
+           folder: "tpn-img",
+         });
+ 
+         // Delete previous Cloudinary image if it exists
+         if (user.cloudinary_id) {
+           await cloudinary.uploader.destroy(user.cloudinary_id);
+         }
+       } catch (cloudinaryError) {
+         throw new ApiError(500, "Failed to upload image to Cloudinary");
+       }
+     }
 
-    if (user.cloudinary_id) {
-      await cloudinary.uploader.destroy(user.cloudinary_id);
-    }
-
-  }
-
-  
-
+  // Prepare the updated user data
   const data = {
-    name: name,
-    phone: phone,
+    name: name || user.name,
+    phone: phone || user.phone,
     avatar: result?.secure_url || user.avatar,
     cloudinary_id: result?.public_id || user.cloudinary_id,
   };
 
-  user = await User.findByIdAndUpdate(user._id.toString(), data, {
+  // Update user in the database
+  const updatedUser = await User.findByIdAndUpdate(user._id.toString(), data, {
     new: true,
   });
-  // res.json(user);
+
+  if (!updatedUser) {
+    throw new ApiError(500, "Failed to update user profile");
+  }
 
   return {
     user,
   };
-
-  // let result = null;
-  // result = await User.findOne({ email });
-
-  // try {
-  //   const updatedUser = await User.findByIdAndUpdate(
-  //     id,
-  //     {
-  //       name,
-  //       email,
-  //       phoneNumber,
-  //       gender,
-  //     },
-  //     { new: true, runValidators: true } // Options: 'new' returns the updated document, 'runValidators' ensures validation runs on update
-  //   );
-
-  //   if (!updatedUser) {
-  //     return res.status(404).json({ message: 'User not found' });
-  //   }
-  // // if (role === 'customer') {
-  // // 	result = await User.findOne({ email });
-  // // }
-  // // if (role === 'admin') {
-  // // 	result = await Admin.findOne({ email }).populate('user');
-  // // }
-  //const result = "Nothing ...";
-
-  return result;
 };
-
-// const updateProfile = async (payload: IUser, myFile: any) => {
-
-//   const { name, email, phone, password, role } = payload;
-
-//   const user = await User.isUserExistsByEmail(email);
-
-//   if (user) {
-//     throw new ApiError(409, "User already exists");
-//   }
-
-//   //const session = await mongoose.startSession();
-
-//   // for verification by Email
-//   // make random 6 digit of code
-//   const verificationToken = Math.floor(
-//     100000 + Math.random() * 900000
-//   ).toString();
-//   // Expire time in 1 hour
-//   //const verificationTokenExpireTime = Date.now() + 1 * 60 * 60 * 1000; // 1 hour
-//   const verificationTokenExpireTime = Date.now() + 1 * 60 * 1000; // 1 minute
-
-//   //send image to cloudinary
-//     const { secure_url } = await sendImageToCloudinary(email, myFile.path);
-
-//   // create user
-//   const newUser = await User.create({
-//     name,
-//     email,
-//     phone,
-//     password,
-//     role,
-//     image: secure_url,
-//     verificationToken,
-//     verificationTokenExpiresAt: verificationTokenExpireTime,
-//   });
-
-//   // send email
-//   await sendEmail({
-//     to: email,
-//     subject: "Your Verification Code",
-//     text: verificationToken,
-//   });
-
-//   // If failed to create an user
-//   if (!newUser) {
-//     throw new ApiError(httpStatus.BAD_REQUEST, "Failed to create user");
-//   }
-
-//   return {
-//     newUser,
-//   };
-// };
 
 export const AuthServices = {
   signupUser,
