@@ -5,6 +5,7 @@ import { ITour, TourModelType } from './tour.interface';
 
 // 2. Create a Schema corresponding to the document interface.
 
+
 const TourSchema: Schema = new Schema<ITour>(
 	{
 		fromLocation: { type: String, required: true },
@@ -19,6 +20,8 @@ const TourSchema: Schema = new Schema<ITour>(
 		timestamps: true, // Adds createdAt and updatedAt fields
 	}
 );
+
+
 
 TourSchema.pre('save', async function (next) {
 	const isTourExists = await tourModel.findOne({

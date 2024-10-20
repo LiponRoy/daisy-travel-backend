@@ -6,41 +6,6 @@
     "auditLog": "D:\\Z Lipon All\\A  Projects Me\\daisy-travel-backend\\log\\winston\\success\\.fa150965eef5492bace6e1bd36e4d559eca1b015-audit.json",
     "files": [
         {
-            "date": 1728191436565,
-            "name": "D:\\Z Lipon All\\A  Projects Me\\daisy-travel-backend\\log\\winston\\success\\success-2024-10-06-11.log",
-            "hash": "5b5f204febe7deb12362cbdd9f3a2e4c3c625bae101a9e95037ab84cc19128c2"
-        },
-        {
-            "date": 1728197256994,
-            "name": "D:\\Z Lipon All\\A  Projects Me\\daisy-travel-backend\\log\\winston\\success\\success-2024-10-06-12.log",
-            "hash": "631d45b102785ace7fea0a4ac6ee2951fba3003af72679a681ce6f5870120ec0"
-        },
-        {
-            "date": 1728204782389,
-            "name": "D:\\Z Lipon All\\A  Projects Me\\daisy-travel-backend\\log\\winston\\success\\success-2024-10-06-14.log",
-            "hash": "ba8c04e3d905f5c80c88463d6220a12d212d7e555e25603c44605cfb9ed8b4f6"
-        },
-        {
-            "date": 1728205326910,
-            "name": "D:\\Z Lipon All\\A  Projects Me\\daisy-travel-backend\\log\\winston\\success\\success-2024-10-06-15.log",
-            "hash": "310d509947ba6b889e4546d91def7f241fa7913c174edde90a12c5570bd9c2c6"
-        },
-        {
-            "date": 1728211421768,
-            "name": "D:\\Z Lipon All\\A  Projects Me\\daisy-travel-backend\\log\\winston\\success\\success-2024-10-06-16.log",
-            "hash": "658d977e96b0ec2b4e986cf600b5195bef2ad5bafdfa1354f5b709b08def5d16"
-        },
-        {
-            "date": 1728212646606,
-            "name": "D:\\Z Lipon All\\A  Projects Me\\daisy-travel-backend\\log\\winston\\success\\success-2024-10-06-17.log",
-            "hash": "bbc1e0015d076e1457088b8710d1d13baa1a8f48d81fbd1e9aea419ffee8b92e"
-        },
-        {
-            "date": 1728216089503,
-            "name": "D:\\Z Lipon All\\A  Projects Me\\daisy-travel-backend\\log\\winston\\success\\success-2024-10-06-18.log",
-            "hash": "5ed7ad8da15b74f01aebe15c31fc1abe74f199c7eadc6dc585ac680afb9e0b01"
-        },
-        {
             "date": 1728278839385,
             "name": "D:\\Z Lipon All\\A  Projects Me\\daisy-travel-backend\\log\\winston\\success\\success-2024-10-07-11.log",
             "hash": "695f26bff7388e28e4b1a262852def1ec40756094961c43a2ee5b40799caf997"
@@ -129,6 +94,31 @@
             "date": 1729400678607,
             "name": "D:\\Z Lipon All\\A  Projects Me\\daisy-travel-backend\\log\\winston\\success\\success-2024-10-20-11.log",
             "hash": "8ec0abb9933f5f611744ff9a98fcd74500e4947ebd9314d1991c612e842d9769"
+        },
+        {
+            "date": 1729408685792,
+            "name": "D:\\Z Lipon All\\A  Projects Me\\daisy-travel-backend\\log\\winston\\success\\success-2024-10-20-13.log",
+            "hash": "aa3e3ef548cfbb8c1709fcafeccb42c9290092fc4dceb4f3231dc58e392d281d"
+        },
+        {
+            "date": 1729412518985,
+            "name": "D:\\Z Lipon All\\A  Projects Me\\daisy-travel-backend\\log\\winston\\success\\success-2024-10-20-14.log",
+            "hash": "2e4a49c9e632c7a0aab2f7415aa5cb3f825feb8426ec1467198ef9172ed510c2"
+        },
+        {
+            "date": 1729420036810,
+            "name": "D:\\Z Lipon All\\A  Projects Me\\daisy-travel-backend\\log\\winston\\success\\success-2024-10-20-16.log",
+            "hash": "6444198d4e6d86db6a92223d9c44c5519b94e241dd8ce6a0f1826368104c186c"
+        },
+        {
+            "date": 1729422001124,
+            "name": "D:\\Z Lipon All\\A  Projects Me\\daisy-travel-backend\\log\\winston\\success\\success-2024-10-20-17.log",
+            "hash": "fdb027fd25c3295cd186a3a87a306b4ac054974036e6039a102d1925f4a9358c"
+        },
+        {
+            "date": 1729426584187,
+            "name": "D:\\Z Lipon All\\A  Projects Me\\daisy-travel-backend\\log\\winston\\success\\success-2024-10-20-18.log",
+            "hash": "48ad5bfb77b39b7cc9e4f661f99c76c018cf6d68976bc567bb15d429c73fd546"
         }
     ],
     "hashType": "sha256"
