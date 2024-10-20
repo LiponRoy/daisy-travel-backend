@@ -9,8 +9,8 @@ const subTravelerSchema = new mongoose.Schema<IsubTraveler>({
 });
 
 const TravelerSchema = new mongoose.Schema<Itraveler>({
-  mainTravelerName: { type: String, required: true },
-  mainTravelerEmail: { type: String, required: true },
+  name: { type: String, required: true },
+  email: { type: String, required: true },
   Travelers: [subTravelerSchema], // Array of sub-users
 });
 

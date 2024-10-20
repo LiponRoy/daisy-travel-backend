@@ -4,12 +4,12 @@ import { TravelerModel } from './Traveler.model';
 
 const createTraveler = async (payload: Itraveler): Promise<Itraveler> => {
 
-	const { mainTravelerName, mainTravelerEmail, Travelers } = payload;
+	const { name, email, Travelers } = payload;
 
     // Create and save new user
     const newTraveler = new TravelerModel({
-		mainTravelerName,
-		mainTravelerEmail,
+		name,
+		email,
 		Travelers,
     });
 

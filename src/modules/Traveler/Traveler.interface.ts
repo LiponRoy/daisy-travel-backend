@@ -3,7 +3,7 @@ export interface IsubTraveler{
 	email:String,
 }
 export interface Itraveler{
-	mainTravelerName:String,
-	mainTravelerEmail:String,
+	name:String,
+	email:String,
 	Travelers:IsubTraveler[],
 }
