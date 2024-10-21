@@ -35,8 +35,9 @@ const TravelerSchema = new mongoose.Schema<Itraveler>({
   pdf2_cloudinary_id: {
     type: String,
   },
-  Travelers: [subTravelerSchema], // Array of sub-users
+ Travelers: [subTravelerSchema], // Array of sub-users
 });
+
 
 export const TravelerModel = mongoose.model('Traveler', TravelerSchema);
 

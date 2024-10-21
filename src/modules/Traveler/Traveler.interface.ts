@@ -16,4 +16,3 @@ export interface Itraveler{
 	Travelers:IsubTraveler[],
 }
 
-

@@ -18,7 +18,6 @@ export default upload;
 
 // import multer from "multer";
 // import path from "path";
-
 // // Multer config
 // const storage = multer.diskStorage({
 //   destination: (req:any, file:any, cb:any) => {
