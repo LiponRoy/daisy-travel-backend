@@ -4,8 +4,8 @@ import httpStatus from 'http-status';
 // import pick from '../../shared/pick';
 import ApiError from '../../errors/ApiError';
 import { catchAsyncError } from '../../utils/catchAsyncErrors';
-import { TravelerModel } from './Traveler.model';
 import cloudinary from '../../utils/cloudinary';
+import { TravelerModelBig } from './TravelerBig.model';
 // import { tourService } from './Traveler.service';
 
 // Define Multer file type
@@ -21,9 +21,9 @@ interface MulterFile {
   }
 
 
-const createTraveler = catchAsyncError(
+const createTravelerBig = catchAsyncError(
 	async (req: Request, res: Response, next: NextFunction) => {
-
+console.log("Hello Big Big...")
 		const { name, email, Travelers } = req.body;
 
 		// Parse the Travelers JSON strings into objects
@@ -68,7 +68,7 @@ const createTraveler = catchAsyncError(
 
 
 
-		const travelerData = new TravelerModel({
+		const travelerData = new TravelerModelBig({
 			name,
 			email,
 			pdf1:resultPdf1?.secure_url || '',
@@ -95,6 +95,6 @@ const createTraveler = catchAsyncError(
 );
 
 
-export const travelController = {
-	createTraveler,
+export const travelControllerBig = {
+	createTravelerBig,
 };
