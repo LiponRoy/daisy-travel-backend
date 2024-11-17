@@ -1,9 +1,9 @@
-export interface IsubTraveler{
-	name:String,
-	email:String,
+export interface IsubTraveler {
+	name: String;
+	email: String;
 }
-export interface Itraveler{
-	mainTravelerName:String,
-	mainTravelerEmail:String,
-	Travelers:IsubTraveler[],
+export interface Itraveler {
+	name: String;
+	email: String;
+	Travelers: IsubTraveler[];
 }
