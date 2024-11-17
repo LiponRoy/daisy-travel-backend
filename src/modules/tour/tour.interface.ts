@@ -7,10 +7,11 @@ export interface ITour {
 	fromLocation: string;
 	toLocation: string;
 	price: string;
-	moment: TourMoment;
-	code: TourCode;
+	duration: number;
+	// moment: TourMoment;
+	// code: TourCode;
 	tourDate: string;
-	country: Types.ObjectId;
+	country: string;
 }
 
 export type TourModelType = Model<ITour, Record<string, unknown>>;

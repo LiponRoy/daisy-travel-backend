@@ -9,19 +9,20 @@ const TourZodSchema = z.object({
 		toLocation: z.string({
 			required_error: 'ToLocation is required',
 		}),
+		duration: z.number({
+			required_error: 'duration is required',
+		}),
 		price: z.string({
 			required_error: 'Price is required',
 		}),
 		// This way we can use enum in typescript.
 		// Moment: z.enum([...TourMomentsArray] as [string, ...string[]]),
-		moment: z.enum([...TourMomentsArray] as [string, ...string[]]),
-		code: z.enum([...TourCodesArray] as [string, ...string[]]),
+		// moment: z.enum([...TourMomentsArray] as [string, ...string[]]),
+		// code: z.enum([...TourCodesArray] as [string, ...string[]]),
 		tourDate: z.string({
 			required_error: 'Tour Date is required',
 		}),
-		country: z.string({
-			required_error: 'country is required',
-		}),
+		country: z.enum(['Bangladesh', 'India', 'Bhutan',"Thailand"]),
 	}),
 });
 

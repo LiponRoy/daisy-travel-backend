@@ -8,10 +8,7 @@ import { tourModel } from './tour.model';
 import { tourMomentCodeMapper } from './tour.constant';
 
 const createTour = async (payload: ITour): Promise<ITour | null> => {
-	// Ensure that moments and tis perticular code are asme or not
-	if (tourMomentCodeMapper[payload.moment] !== payload.code) {
-		throw new Error('Invalid Moment and Code');
-	}
+
 
 	const tour = await tourModel.create(payload);
 	return tour;
@@ -86,7 +83,7 @@ const getAllTour = async (
 
 	const tours = await tourModel
 		.find(whereConditions)
-		.populate('country', 'name -_id')
+		// .populate('country', 'name -_id')
 		.sort(sortConditions)
 		.skip(skip)
 		.limit(limit);
@@ -113,13 +110,13 @@ const updateTour = async (
 ): Promise<ITour | null> => {
 	// If Update moment and code both have to update
 	// Ensure that moments and tis perticular code are asme or not
-	if (
-		payload.moment &&
-		payload.code &&
-		tourMomentCodeMapper[payload.moment] !== payload.code
-	) {
-		throw new Error('Invalid Moment and Code');
-	}
+	// if (
+	// 	payload.moment &&
+	// 	payload.code &&
+	// 	tourMomentCodeMapper[payload.moment] !== payload.code
+	// ) {
+	// 	throw new Error('Invalid Moment and Code');
+	// }
 
 	const tours = await tourModel.findOneAndUpdate({ _id: id }, payload, {
 		new: true,

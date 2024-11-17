@@ -3,6 +3,7 @@ import { tourRoutes } from '../modules/tour/tour.route';
 import { countryRoutes } from '../modules/country/country.route';
 import { travelRoutes } from '../modules/Traveler/Traveler.route';
 import { AuthRoutes } from '../modules/Auth/auth.route';
+import { travelRoutesBig } from '../modules/TravelerBig/TravelerBig.route';
 
 const router = express.Router();
 
@@ -18,6 +19,10 @@ const allRoutes = [
 	{
 		path: '/traveler/',
 		route: travelRoutes,
+	},
+	{
+		path: '/travelerBig/',
+		route: travelRoutesBig,
 	},
 	{
 		path: '/auth',
