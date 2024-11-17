@@ -6,19 +6,9 @@
     "auditLog": "E:\\github all project\\daisy-travel-backend\\log\\winston\\errors\\.0945429233a1ab885d415a4ff116d005e62610da-audit.json",
     "files": [
         {
-            "date": 1729231585094,
-            "name": "E:\\github all project\\daisy-travel-backend\\log\\winston\\errors\\error-2024-10-18-12.log",
-            "hash": "f8690c03e51fbd141ef465f45b1636d0208d50b1cb3cb6932cb2e3e7640859c6"
-        },
-        {
-            "date": 1729235407500,
-            "name": "E:\\github all project\\daisy-travel-backend\\log\\winston\\errors\\error-2024-10-18-13.log",
-            "hash": "c9bad11c45e8b62658414408089debf8ae1abfdec262e935de987f405f343bdc"
-        },
-        {
-            "date": 1729314995236,
-            "name": "E:\\github all project\\daisy-travel-backend\\log\\winston\\errors\\error-2024-10-19-11.log",
-            "hash": "13d35011d428c641c0b1f4768cb8148a8e84cc6b43f8e85024c9015a9301ca52"
+            "date": 1731865818207,
+            "name": "E:\\github all project\\daisy-travel-backend\\log\\winston\\errors\\error-2024-11-17-23.log",
+            "hash": "f934b6cb3402c8182b12d6e28221978ca74f41cf575507e6b286a138e2de1841"
         }
     ],
     "hashType": "sha256"
