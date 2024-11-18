@@ -37,9 +37,9 @@ const getTours = catchAsyncError(async (req: Request, res: Response) => {
 	// };
 	const filters = pick(req.query, [
 		'searchTerm',
-		'fromLocation',
-		'toLocation',
+		'country',
 		'price',
+		'duration'
 	]);
 	const paginationOptions = pick(req.query, paginationsFields);
 	console.log('req.query, ', req.query);

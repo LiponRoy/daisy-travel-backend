@@ -6,7 +6,7 @@ export type TourCode = '01' | '02' | '03';
 export interface ITour {
 	fromLocation: string;
 	toLocation: string;
-	price: string;
+	price: number;
 	duration: number;
 	// moment: TourMoment;
 	// code: TourCode;
