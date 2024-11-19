@@ -5,6 +5,11 @@ const pick = <T extends Record<string, unknown>, K extends keyof T>(
 	obj: T,
 	Keys: K[]
 ): Partial<T> => {
+
+	console.log("Pic Objjjj ", obj)
+	console.log("pic keyessss ", Keys)
+
+
 	const finalObj: Partial<T> = {};
 
 	for (const key of Keys) {
