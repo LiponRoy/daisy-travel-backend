@@ -12,7 +12,7 @@ const TourZodSchema = z.object({
 		duration: z.number({
 			required_error: 'duration is required',
 		}),
-		price: z.string({
+		price: z.number({
 			required_error: 'Price is required',
 		}),
 		// This way we can use enum in typescript.

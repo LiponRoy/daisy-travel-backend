@@ -6,7 +6,7 @@ export type TourCode = '01' | '02' | '03';
 export interface ITour {
 	fromLocation: string;
 	toLocation: string;
-	price: String;
+	price: number;
 	duration: number;
 	// moment: TourMoment;
 	// code: TourCode;
@@ -18,6 +18,8 @@ export type TourModelType = Model<ITour, Record<string, unknown>>;
 
 export interface ItureFilters {
 	searchTerm?: string;
+	minPrice?: number;
+	maxPrice?: number;
 }
 
 export type TtourMomentCodeMapper = {

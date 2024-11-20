@@ -1,5 +1,7 @@
 export const paginationsFields = ['page', 'limit', 'sortBy', 'sortOrder'];
-export const tourSearchableField = ['fromLocation', 'toLocation', 'price','country'];
+// search korle jegulor upore effect porbe
+export const tourSearchableField = ['fromLocation', 'toLocation','country'];
+// jegulo filter kora jabe and search
 export const tourSearchAndFilter = [
 	'searchTerm',
 	'fromLocation',
