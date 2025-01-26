@@ -6,6 +6,7 @@ import { AuthValidation } from './auth.validation';
 import { USER_ROLE } from './auth.constant';
 import { authorizeRoles, isAuthenticatedUser } from '../../middlewares/auth';
 import upload from '../../middlewares/multerMiddleware';
+import { compressImage } from '../../middlewares/compressImage';
 
 
 const router = express.Router();
@@ -20,6 +21,7 @@ router.post(
 router.post(
 	'/profileUpdate',
 	upload.single("avatar"),
+	// compressImage,
 	AuthControllers.updateProfile
 );
 router.post(

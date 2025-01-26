@@ -8,6 +8,7 @@ import bcrypt from "bcrypt";
 import crypto from "crypto";
 import ApiError from "../../errors/ApiError";
 import cloudinary from "../../utils/cloudinary";
+import fs from "fs";
 
 const signupUser = async (payload: IUser) => {
   const { email } = payload;
@@ -249,6 +250,7 @@ const getMe = async (email: string, role: string) => {
   return result;
 };
 
+
 const updateProfile = async (payload: Partial<IUser>, photoFile: any) => {
   const { name, phone, email } = payload;
 
@@ -265,15 +267,23 @@ const updateProfile = async (payload: Partial<IUser>, photoFile: any) => {
      let result: any = null;
      if (photoFile) {
        try {
+        
          // Upload image to Cloudinary
          result = await cloudinary.uploader.upload(photoFile.path, {
            folder: "tpn-img",
+           transformation: [
+            { width: 800, height: 800, crop: 'limit' }, // Resize image
+            { quality: 'auto', fetch_format: 'auto' }   // Optimize quality and format
+          ]
          });
  
          // Delete previous Cloudinary image if it exists
          if (user.cloudinary_id) {
            await cloudinary.uploader.destroy(user.cloudinary_id);
          }
+           // Delete from local file from /upload folder after successful upload.
+           fs.unlinkSync(photoFile.path);
+
        } catch (cloudinaryError) {
          throw new ApiError(500, "Failed to upload image to Cloudinary");
        }

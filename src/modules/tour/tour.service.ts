@@ -142,6 +142,7 @@ const getSingleTour = async (id: string): Promise<ITour | null> => {
   return tours;
 };
 
+
 const updateTour = async (
   id: string,
   payload: Partial<ITour>
