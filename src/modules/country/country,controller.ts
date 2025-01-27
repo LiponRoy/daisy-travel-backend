@@ -7,10 +7,15 @@ import { catchAsyncError } from '../../utils/catchAsyncErrors';
 
 const createCountry = catchAsyncError(
 	async (req: Request, res: Response, next: NextFunction) => {
-		const { ...countryData } = req.body;
 
-		const result = await countryService.createCountry(countryData);
-		// console.log("result :",result)
+	const { name,category } = req.body; // Extract fields from the body
+    const files = req.files as Express.Multer.File[]; // Files uploaded from Multer
+
+	console.log("files.length controller..... ,", files.length);
+	
+		
+
+		const result = await countryService.createCountry({name,category },files);
 
 		if (!result) {
 			throw new ApiError(400, 'Failed to create country !');

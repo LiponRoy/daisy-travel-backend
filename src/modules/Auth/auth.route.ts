@@ -19,7 +19,7 @@ router.post(
 // Profile update 
 router.post(
 	'/profileUpdate',
-	upload.single("avatar"),
+	// upload.single("avatar"),
 	AuthControllers.updateProfile
 );
 router.post(

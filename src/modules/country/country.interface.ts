@@ -1,8 +1,12 @@
-import { Model } from 'mongoose';
+import {Document } from 'mongoose';
 
-export interface ICountry {
-	name: string;
-	location: string;
+interface IImage {
+  cloudinary_id: string;
+  imageUrl: string;
 }
 
-export type CountryModelType = Model<ICountry, Record<string, unknown>>;
+export interface ICountry extends Document {
+   name: string;
+   category:string;
+   images: IImage[];
+}

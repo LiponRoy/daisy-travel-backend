@@ -1,19 +1,17 @@
-// src/models/Tour.ts
+import { model, Schema } from "mongoose";
+import { ICountry } from "./country.interface";
 
-import mongoose, { Schema, Model, model } from 'mongoose';
-import { CountryModelType, ICountry } from './country.interface';
-
-const CountrySchema: Schema = new Schema<ICountry>(
-	{
-		name: { type: String, required: true },
-		location: { type: String, required: true },
-	},
-	{
-		timestamps: true, // Adds createdAt and updatedAt fields
-	}
-);
-
-export const countryModel = model<ICountry, CountryModelType>(
-	'Country',
-	CountrySchema
-);
+const countrySchema = new Schema<ICountry>({
+	name: { type: String, required: true,unique: true },
+	category: { type: String, required: true },
+	images: [
+	  {
+		cloudinary_id: { type: String, required: true },
+		imageUrl: { type: String, required: true }
+	  }
+	],
+  });
+  
+  const countryModel = model<ICountry>('Country', countrySchema);
+  
+  export default countryModel;
