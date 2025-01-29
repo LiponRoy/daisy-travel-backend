@@ -1,17 +1,23 @@
 import mongoose from "mongoose";
-import { ICountry } from "./country.interface";
 import {
   deleteLocalFile,
   uploadImage,
 } from "../../utils/cloudinary_file_upload";
 import ApiError from "../../errors/ApiError";
-import countryModel from "./country.model";
+import PackageModel, { IPackage } from "./package.model";
+// import countryModel, { ITour } from "./package.model";
 
-const createCountry = async (
-  payload: Partial<ICountry>,
+const createPackage = async (
+  payload: Partial<IPackage>,
   files: Express.Multer.File[]
-): Promise<ICountry | null> => {
-  const { name,category} = payload;
+): Promise<IPackage | null> => {
+
+  console.log("Payload service: ", payload)
+  console.log("files service: ", files)
+
+
+
+  const { title} = payload;
 
   // Find the user by name ,if found it mean already hav this country so delete local path image
   if (files.length > 4 || files.length < 4 ) {
@@ -25,10 +31,9 @@ const createCountry = async (
 	  }
 	throw new ApiError(400, 'do not support less than or equal 4 images');
   }
-
-
+  
   // Find the user by name ,if found it mean already hav this country so delete local path image
-  const countryName = await countryModel.findOne({ name });
+  const countryName = await PackageModel.findOne({ title });
   if (countryName){
 	  for (const file of files) {
 		try {
@@ -48,8 +53,9 @@ const createCountry = async (
   for (const file of files) {
 	console.log("file.path", file.path);
     try {
+      let cloudinaryFolder=`/Tpn_Package/${title as string}`
       // Upload image
-      const result = await uploadImage(file.path, name as string);
+      const result = await uploadImage(file.path,cloudinaryFolder); 
 
       // Add image details to the images array
       uploadedImages.push({
@@ -69,16 +75,21 @@ const createCountry = async (
     }
   }
 
+
+
+  console.log("uploadedImages services ... ", uploadedImages)
+
    // Prepare the updated user data
    const updatedData = {
-    name: name || '',
-    category: category || '',
+    // name: name || '',
+    // category: category || '',
+    ...payload,
     images: uploadedImages.length > 0 ? uploadedImages : undefined,  // Update avatars field with Cloudinary info
   };
 
 
   // Create new user if doesn't exist
-  const newCountry = await countryModel.create(updatedData);
+  const newCountry = await PackageModel.create(updatedData);
 
   if (!newCountry) {
     throw new ApiError(500, "Failed to create country");
@@ -88,8 +99,8 @@ const createCountry = async (
 
 };
 
-const allCountry = async (): Promise<any> => {
-  const tour = await countryModel
+const allPackage = async (): Promise<any> => {
+  const tour = await PackageModel
     .findOne(
       {
         name: "Singapur",
@@ -107,7 +118,7 @@ const allCountry = async (): Promise<any> => {
   return tour;
 };
 
-export const countryService = {
-  createCountry,
-  allCountry,
+export const packageService = {
+  createPackage,
+  allPackage,
 };

@@ -1,37 +1,37 @@
-import { countryService } from './country.services';
+import {packageService } from './package.services';
 import { NextFunction, Request, Response } from 'express';
 import sendResponse from '../../utils/sendResponse';
 import httpStatus from 'http-status';
 import ApiError from '../../errors/ApiError';
 import { catchAsyncError } from '../../utils/catchAsyncErrors';
 
-const createCountry = catchAsyncError(
+const createPackage = catchAsyncError(
 	async (req: Request, res: Response, next: NextFunction) => {
 
-	const { name,category } = req.body; // Extract fields from the body
+	//const { name,category } = req.body; // Extract fields from the body
     const files = req.files as Express.Multer.File[]; // Files uploaded from Multer
 
-	console.log("files.length controller..... ,", files.length);
+	//console.log("files.length controller..... ,", files.length);
 	
 		
 
-		const result = await countryService.createCountry({name,category },files);
+		const result = await packageService.createPackage(req.body ,files);
 
-		if (!result) {
-			throw new ApiError(400, 'Failed to create country !');
-		}
+		// if (!result) {
+		// 	throw new ApiError(400, 'Failed to create Package !');
+		// }
 
 		sendResponse(res, {
 			statusCode: httpStatus.OK,
 			success: true,
-			message: 'Country Created Successfully !',
+			message: 'Package Created Successfully !',
 			data: result,
 		});
 	}
 );
 
-const getAllAcountry = catchAsyncError(async (req: Request, res: Response) => {
-	const result = await countryService.allCountry();
+const getAllPackage = catchAsyncError(async (req: Request, res: Response) => {
+	const result = await packageService.allPackage();
 	//console.log('result----', result);
 	sendResponse(res, {
 		statusCode: httpStatus.OK,
@@ -42,7 +42,7 @@ const getAllAcountry = catchAsyncError(async (req: Request, res: Response) => {
 	});
 });
 
-export const countryController = {
-	createCountry,
-	getAllAcountry,
+export const packageController = {
+	createPackage,
+	getAllPackage,
 };
