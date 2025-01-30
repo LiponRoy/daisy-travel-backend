@@ -4,6 +4,21 @@ interface IHighlight {
   title: string;
   description: string;
 }
+interface IInclusions {
+  title: string;
+}
+
+interface IExclusions {
+  title: string;
+}
+
+interface ICities {
+  title: string;
+}
+
+interface IImportantNotes {
+  title: string;
+}
 
 interface IDetailedItinerary {
   day: string;
@@ -16,10 +31,10 @@ export interface IPackage extends Document {
   about: string;
   price: number;
   highlights: IHighlight[];
-  inclusions: string[];
-  exclusions: string[];
-  cities: string[];
-  importantNotes: string[];
+  inclusions: IInclusions[];
+  exclusions: IExclusions[];
+  cities: ICities[];
+  importantNotes: IImportantNotes[];
   detailedItinerary: IDetailedItinerary[];
   category: string;
   duration: string;
@@ -32,6 +47,22 @@ export interface IPackage extends Document {
 const highlightSchema = new Schema<IHighlight>({
   title: { type: String, required: true },
   description: { type: String, required: true },
+});
+
+const inclusionsSchema = new Schema<IInclusions>({
+  title: { type: String, required: true },
+});
+
+const exclusionsSchema = new Schema<IExclusions>({
+  title: { type: String, required: true },
+});
+
+
+const citiesSchema = new Schema<ICities>({
+  title: { type: String, required: true },
+});
+const importantNotesSchema = new Schema<IImportantNotes>({
+  title: { type: String, required: true },
 });
 
 const detailedItinerarySchema = new Schema<IDetailedItinerary>({
@@ -56,10 +87,10 @@ const tourSchema = new Schema<IPackage>({
   about: { type: String, required: true },
   price: { type: Number, required: true },
   highlights: { type: [highlightSchema], required: true },
-  inclusions: { type: [String], required: true },
-  exclusions: { type: [String], required: true },
-  cities: { type: [String], required: true },
-  importantNotes: { type: [String], required: true },
+  inclusions: { type: [inclusionsSchema], required: true },
+  exclusions: { type: [exclusionsSchema], required: true },
+  cities: { type: [citiesSchema], required: true },
+  importantNotes: { type: [importantNotesSchema], required: true },
   detailedItinerary: { type: [detailedItinerarySchema], required: true },
   category: { type: String, required: true },
   duration: { type: String, required: true },
