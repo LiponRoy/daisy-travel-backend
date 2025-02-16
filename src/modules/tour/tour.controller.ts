@@ -7,6 +7,7 @@ import { paginationsFields } from '../../constants/paginationsFields';
 import { ITour } from './tour.interface';
 import ApiError from '../../errors/ApiError';
 import { catchAsyncError } from '../../utils/catchAsyncErrors';
+import { tourModel } from './tour.model';
 
 const createTour = catchAsyncError(
 	async (req: Request, res: Response, next: NextFunction) => {
@@ -41,7 +42,7 @@ const getTours = catchAsyncError(async (req: Request, res: Response) => {
 		'price',
 		'duration',
 		'minPrice',
-		'maxPrice'
+		'maxPrice',
 	]);
 	const paginationOptions = pick(req.query, paginationsFields);
 	console.log('req.query, ', req.query);
@@ -102,10 +103,35 @@ const deleteTour = catchAsyncError(async (req: Request, res: Response) => {
 	});
 });
 
+export const tourAllCountries = async (req: Request, res: Response) => {
+	try {
+		const products = await tourModel.distinct('country'); // Get only product names
+		res.status(200).json(products);
+	} catch (error) {
+		res.status(500).json({ error: 'Failed to fetch country names' });
+	}
+};
+
+export const getTotalPrice = async (req: Request, res: Response) => {
+	try {
+		// Fetch all packages with only the price field
+		const packages = await tourModel.find().select('price');
+
+		// Sum all prices using reduce
+		const totalPrice = packages.reduce((sum, pkg) => sum + pkg.price, 0);
+
+		res.status(200).send(totalPrice.toString());
+	} catch (error) {
+		res.status(500).json({ error: 'Failed to calculate total price' });
+	}
+};
+
 export const tourController = {
 	createTour,
 	getTours,
 	getSingleTour,
 	updateTour,
 	deleteTour,
+	tourAllCountries,
+	getTotalPrice,
 };

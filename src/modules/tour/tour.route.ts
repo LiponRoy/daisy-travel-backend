@@ -13,6 +13,10 @@ routes.post(
 
 //routes.post('/create', tourController.createTour);
 routes.get('/', tourController.getTours);
+
+routes.get('/countries', tourController.tourAllCountries);
+routes.get('/totalPrice', tourController.getTotalPrice);
+
 routes.get('/:id', tourController.getSingleTour);
 routes.patch(
 	'/:id',
