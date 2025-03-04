@@ -15,6 +15,13 @@ routes.post(
 	packageController.createPackage
 );
 
+routes.post(
+	'/create_tow',
+	upload.array('images', 4),
+	// handleMulterErrors,
+	packageController.createPackage_Two
+  );
+
 routes.get('/', packageController.getAllPackage);
 
 export const packageRoutes = routes;
