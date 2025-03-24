@@ -4,10 +4,11 @@ import app from './app';
 import { Server } from 'http';
 import { errorLogger, logger } from './shared/logger';
 
-// uncaught Exception handle
-process.on('uncaughtException', () => {
-	console.log(`😈 uncaughtException is detected , shutting down ...`);
-	process.exit(1);
+process.on('uncaughtException', (err) => {
+    console.log(`😈 uncaughtException is detected, shutting down`);
+    console.error('Error message:', err.message); // Logs the error message
+    console.error('Stack trace:', err.stack); // Logs the full stack trace
+    process.exit(1); // Exit the process with a failure code
 });
 
 let server: Server;
