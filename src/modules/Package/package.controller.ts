@@ -4,6 +4,7 @@ import sendResponse from '../../utils/sendResponse';
 import httpStatus from 'http-status';
 import ApiError from '../../errors/ApiError';
 import { catchAsyncError } from '../../utils/catchAsyncErrors';
+import { packageService_two } from './package.services_two';
 
 const createPackage = catchAsyncError(
 	async (req: Request, res: Response, next: NextFunction) => {
@@ -30,6 +31,29 @@ const createPackage = catchAsyncError(
 	}
 );
 
+// for testing 
+const createPackage_Two = catchAsyncError(
+	async (req: Request, res: Response, next: NextFunction) => {
+
+    const files = req.files as Express.Multer.File[]; // Files uploaded from Multer
+
+	console.log("cntrl files--",files)
+	console.log("cntrl rec body--",req.body);
+
+
+		const result = await packageService_two.createPackage_Two(req.body ,files);
+
+
+
+		sendResponse(res, {
+			statusCode: httpStatus.OK,
+			success: true,
+			message: 'Package Created Successfully !',
+			data: result,
+		});
+	}
+);
+
 const getAllPackage = catchAsyncError(async (req: Request, res: Response) => {
 	const result = await packageService.allPackage();
 	//console.log('result----', result);
@@ -44,5 +68,6 @@ const getAllPackage = catchAsyncError(async (req: Request, res: Response) => {
 
 export const packageController = {
 	createPackage,
+	createPackage_Two,
 	getAllPackage,
 };

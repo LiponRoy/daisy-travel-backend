@@ -99,6 +99,8 @@ const createPackage = async (
 
 };
 
+
+
 const allPackage = async (): Promise<any> => {
   const tour = await PackageModel
     .findOne(
